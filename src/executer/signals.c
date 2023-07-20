@@ -1,0 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yraiss <yraiss@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/17 22:36:18 by yraiss            #+#    #+#             */
+/*   Updated: 2023/07/18 20:20:38 by yraiss           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../include/minishell.h"
+
+void    handle_sigint(int sig)
+{
+	(void) sig;
+	write(2, "\n", 1);
+    rl_replace_line("",0);
+	rl_on_new_line();
+    rl_redisplay();
+	signal(SIGINT, handle_sigint);
+}
+
+void	handle_endoffile(int sig)
+{
+	(void) sig;
+	exit(0);
+}
+
+void	handle_sigquit(int sig)
+{
+	(void) sig;
+}
+
+void signals()
+{
+	signal(SIGINT, handle_sigint);
+	signal(EOF, handle_endoffile);
+	signal(SIGQUIT, handle_sigquit);
+}
