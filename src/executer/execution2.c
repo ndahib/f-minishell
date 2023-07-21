@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 10:13:06 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/21 16:59:33 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/21 23:27:47 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,18 @@ int	execute_one_simple_cmd(t_simple_cmd *one_cmd, t_env **env)
 	int		status;
 	char	**env_array;
 
-	if (is_built_ins(env, one_cmd) == 0)
+	if (check_is_built_ins(one_cmd->cmd) == 0)
 	{
-		exit_status = 0;
-		return (exit_status);
+		if (is_built_ins(env, one_cmd) == 0)
+		{
+			exit_status = 0;
+			return (exit_status);
+		}
+		else
+		{
+			exit_status = 1;
+			return (exit_status);
+		}
 	}
 	else
 	{
@@ -107,7 +115,7 @@ int	execute_one_simple_cmd(t_simple_cmd *one_cmd, t_env **env)
 		else if (!pid)
 		{
 			if(redirections(one_cmd->files) == 1)
-				return (EXIT_FAILURE);
+				return  (EXIT_FAILURE);
 			if (one_cmd->path == NULL)
 			{
 				printf("minishell: command not found\n");;

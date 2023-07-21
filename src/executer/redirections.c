@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:28:31 by yraiss            #+#    #+#             */
-/*   Updated: 2023/07/21 17:54:21 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/21 23:21:28 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ int	her_doc(char *del)
 	char	*buff;
 	int		pid;
 
-	buff = get_buffer(del);
-	len = ft_strlen(buff);
 	if (pipe(fd) == -1)
 		perror("pipe : ");
 	pid = fork();
@@ -49,17 +47,16 @@ int	her_doc(char *del)
 	}
 	else if (!pid)
 	{
-		write(fd[1], buff, len);
-		close(fd[1]);
-	}
-	else
-	{
-		wait(NULL);
-		close(fd[1]);
 		close(fd[0]);
+		buff = get_buffer(del);
+		ft_putstr_fd(buff, fd[1]);
 		free(buff);
+		close(fd[1]);
+		exit(EXIT_SUCCESS);
 	}
-	return (fd[0]);
+	close(fd[1]);
+	wait(NULL);
+	return fd[0];
 }
 
 // int	check_and_dup(fd, duplicated_file)
