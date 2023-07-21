@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:42:32 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/20 22:21:41 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/21 15:42:42 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	minishell_loop(t_env **env_lst)
 		{
 			free_double_pointer(tokens);
 			free(cmd_line);
+			exit_status = 0;
 			continue ;
 		}
 		parse_cmd = parse_simple_cmd(*env_lst, tokens);

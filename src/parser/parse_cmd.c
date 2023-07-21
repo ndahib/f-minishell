@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 07:59:58 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/19 18:29:23 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/21 01:38:04 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ char	**obtain_args(char	**token, t_env *env_var)
 		return (NULL);
 	while (j < len && *token != NULL)
 	{
-		while (ft_strchr(*token, '>') != NULL
-			|| ft_strchr(*token, '<') != NULL)
+		while ((ft_strchr(*token, '>') != NULL
+			|| ft_strchr(*token, '<') != NULL) && (*token + 1) != NULL)
 			token += 2;
 		if (*token == NULL || **token == '|')
 			break ;

@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:28:31 by yraiss            #+#    #+#             */
-/*   Updated: 2023/07/19 20:17:37 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/21 17:54:21 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,30 @@ int	her_doc(char *del)
 	int		fd[2];
 	int		len;
 	char	*buff;
+	int		pid;
 
 	buff = get_buffer(del);
 	len = ft_strlen(buff);
 	if (pipe(fd) == -1)
 		perror("pipe : ");
-	write(fd[1], buff, len);
-	close(fd[1]);
-	free(buff);
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork in herdoc : \n");
+		return (-1);
+	}
+	else if (!pid)
+	{
+		write(fd[1], buff, len);
+		close(fd[1]);
+	}
+	else
+	{
+		wait(NULL);
+		close(fd[1]);
+		close(fd[0]);
+		free(buff);
+	}
 	return (fd[0]);
 }
 

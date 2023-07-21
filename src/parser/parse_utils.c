@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 12:50:38 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/18 16:27:47 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/21 16:57:54 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ char	*obtain_path(char *command, t_env *env_list)
 			cursor = ft_strjoin(cursor, command);
 			free_double_pointer(split_paths);
 			return (cursor);
+		}
+		else if (access(command, X_OK) != -1)
+		{
+			free(cursor);
+			free_double_pointer(split_paths);
+			return (command);
 		}
 		free(cursor);
 		i++;

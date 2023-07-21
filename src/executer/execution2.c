@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 10:13:06 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/21 00:30:31 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/21 16:59:33 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ int	execute_one_simple_cmd(t_simple_cmd *one_cmd, t_env **env)
 		exit_status = 0;
 		return (exit_status);
 	}
-	
 	else
 	{
 		env_array = convert_env_to_array(*env);
@@ -107,8 +106,13 @@ int	execute_one_simple_cmd(t_simple_cmd *one_cmd, t_env **env)
 			return ((perror("fork"), 1));
 		else if (!pid)
 		{
-			if (redirections(one_cmd->files) == 1)
-				exit(EXIT_FAILURE);
+			if(redirections(one_cmd->files) == 1)
+				return (EXIT_FAILURE);
+			if (one_cmd->path == NULL)
+			{
+				printf("minishell: command not found\n");;
+				exit(127);
+			}
 			if (execve(one_cmd->path, one_cmd->arg, env_array) == -1)
 			{
 				perror("minishell:\n");;
@@ -133,7 +137,7 @@ int	execute_commands(t_simple_cmd *cmnd, t_env **env)
 	int		nbr;
 	pid_t	pid;
 	int		status;
-	
+
 	nbr = get_number_of_cmds(cmnd);
 	if (nbr == 1)
 		status = execute_one_simple_cmd(cmnd, env);

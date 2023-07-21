@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 11:40:38 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/19 19:39:18 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/21 01:44:31 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,20 @@ void	print_lst(t_files *lst)
 int	token_nbr(char **token)
 {
 	int	count;
+	int	on;
 
 	count = 0;
+	on = 0;
 	while (*token != NULL && **token != '|')
 	{
 		if (**token == '>' || **token == '<')
-			token++;
-		else
-			count++;
+		{
+			on += 1;
+		}
+		count++;
 		token++;
 	}
-	return (count);
+	return (count - on);
 }
 
 int	len_of_word(const char *line, char sep)

@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 09:03:39 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/20 22:14:59 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/21 15:42:17 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,17 @@ int	check_pipe(char **tokens, char *fix)
 
 int	check_redirection(char **tokens)
 {
-	if (ft_strncmp(">", *tokens, 1) == 0)
+	if (*(tokens + 1) == NULL)
 	{
-		if (*(tokens + 1) != 0
-			&& (ft_strncmp("<", *(tokens + 1), 1) == 0
-				|| ft_strncmp("|", *(tokens + 1), 1) == 0))
-		{
-			printf(RED PARSE_ERR"`%s'\n", *tokens);
-			return (1);
-		}
+		printf(RED PARSE_ERR"`%s'\n", *tokens);
+		return (1);
 	}
-	else if (ft_strncmp("<", *tokens, 1) == 0)
+	else if (*(tokens + 1) != NULL)
 	{
-		if (*(tokens + 1) != 0
-			&& (ft_strncmp(">", *(tokens + 1), 1) == 0
-				|| ft_strncmp("|", *(tokens + 1), 1) == 0))
+		if (check_file_name(*tokens, *(tokens + 1)) == 1)
 		{
 			printf(RED PARSE_ERR"`%s'\n", *tokens);
-			return (1);
+			return (1);		
 		}
 	}
 	return (0);
@@ -92,13 +85,13 @@ int	check_syntax_err(char **tokens)
 		else if (ft_strncmp(*tokens, ">", 1) == 0
 			|| ft_strncmp(*tokens, "<", 1) == 0)
 			{
-				check_redirection(tokens);
-				return (1);
+				if (check_redirection(tokens) == 1)
+					return (1);
 			}
 		else if ((*tokens)[0] == '"' || (*tokens)[0] == '\'')
 		{
-			check_quotes(tokens);
-			return (1);
+			if (check_quotes(tokens) == 1)
+				return (1);
 		}
 		tokens++;
 	}

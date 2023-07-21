@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 08:04:04 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/21 00:34:23 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/21 16:51:18 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,9 @@ void	my_pwd(void)
 
 	path = getcwd(NULL, 0);
 	if (path == NULL)
-		printf(YELLOW PWD_ERROR);
-	else
-		printf("%s\n", path);
+		return ;
+	ft_putstr_fd(path, 1);
+	ft_putchar_fd('\n', 1);
 	free(path);
 }
 
@@ -130,7 +130,7 @@ int	is_built_ins(t_env **lst, t_simple_cmd *cmd)
 	{
 		printf("enter ehre\n");
 		exit(EXIT_FAILURE);
-	}`
+	}
 	if (ft_strncmp(cmd->cmd, "echo", 5) == 0)
 		my_echo(cmd->arg), 0;
 	else if (ft_strncmp(cmd->cmd, "cd", 2) == 0)
@@ -152,7 +152,13 @@ int	is_built_ins(t_env **lst, t_simple_cmd *cmd)
 	else if (ft_strncmp(cmd->cmd, "exit", 5) == 0)
 		my_exit(cmd->arg);
 	else
+	{
+		dup2(std_fd[0], STDIN_FILENO);
+		dup2(std_fd[1], STDOUT_FILENO);
+		close(std_fd[1]);
+		close(std_fd[0]);
 		return (1);
+	}
 	dup2(std_fd[0], STDIN_FILENO);
 	dup2(std_fd[1], STDOUT_FILENO);
 	close(std_fd[1]);
