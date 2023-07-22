@@ -19,7 +19,7 @@ int	exit_status;
 int		execute_commands(t_simple_cmd *cmnd, t_env **env);
 int		is_built_ins(t_env **lst, t_simple_cmd *cmd);
 int     check_is_built_ins(char *cmd);
-int		redirections(t_files *cmnd, t_env *env);
+int		redirections(t_files *cmnd);
 int     get_number_of_cmds(t_simple_cmd *cmnd);
 char	**convert_env_to_array(t_env *env);
 

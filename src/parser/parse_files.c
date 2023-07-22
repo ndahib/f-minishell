@@ -74,6 +74,8 @@ t_files	*obtain_files(char ***token, t_simple_cmd **simple, t_env *env)
 		else if (***token == '>' || ***token == '<')
 		{
 			file = create_node_files(token);
+			if (file == NULL)
+				return (NULL);
 			obtain_name_and_type(&file_node, file);
 		}
 		(*token)++;

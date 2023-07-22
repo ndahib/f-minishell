@@ -31,7 +31,6 @@ void	print_export_lst(t_env *lst)
 void	my_export(t_env ***lst, char **args)
 {
 	char	**splited_args;
-	char	**cursor;
 
 	if (*args == NULL)
 	{

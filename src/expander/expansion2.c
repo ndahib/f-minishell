@@ -55,7 +55,9 @@ void	print_inside_dquotes(t_env *env, char **new_arg, char **arg)
 {
 	char	*value;
 	char	*cursor;
+	int		i;
 
+	i = 0;
 	while (**arg != '"' && *(*arg + 1) != '\0')
 	{
 		if (**arg == '$')
@@ -66,17 +68,21 @@ void	print_inside_dquotes(t_env *env, char **new_arg, char **arg)
 			cursor = value;
 			if (ft_strlen(cursor) != 0)
 			{
-				while (*cursor != 0)
-					*new_arg = ft_joinchar(*new_arg, *cursor++);
+				while (cursor[i] != 0)
+				{
+					*new_arg = ft_joinchar(*new_arg, cursor[i]);
+					i++;
+				}
+				free(cursor);
 			}
-			// else if (*(*arg + 1) == '?')
-			// {
-			// 	(*arg)++;
-			// 	printf("%d", exit_status);
-			// }
+			else if (*(*arg + 1) == '?')
+			{
+				*new_arg = ft_strjoin(*new_arg, ft_itoa(exit_status));
+				(*arg) += 2;
+			}
 			else
 				*new_arg = ft_joinchar(*new_arg, **arg);
-			if (*arg != '\0')
+			if (*arg != 0)// buck to '\0'
 				*arg += len_of_var(*arg + 1) + 1;
 			if (ft_strlen(value) != 0)
 				free (value);
@@ -144,8 +150,8 @@ char	*expand_line(t_env *env, char *arg)
 char	**expander(t_env *env, char **arg)
 {
 	char	*one_line;
+	char	*new_line;
 	char	**splited;
-	char	*tmp;
 	char	**tmp_for_arg;
 
 	one_line = "";
@@ -156,11 +162,10 @@ char	**expander(t_env *env, char **arg)
 		one_line = ft_joinchar(one_line, ' ');
 		arg++;
 	}
-	tmp = one_line;
-	one_line = expand_line(env, one_line);
-	// free(tmp);
+	new_line = expand_line(env, one_line);
+	splited = ft_split(new_line, '\2');
+	free(one_line);
 	free_double_pointer(tmp_for_arg);
-	splited = ft_split(one_line, '\2');
-	// free(one_line);
+	free(new_line);   
 	return (splited);
 }

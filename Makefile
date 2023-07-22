@@ -12,7 +12,7 @@
 
 #COMMANDS#
 CC		= cc 
-FLAGS	= #-g -fsanitize=address -Wall -Wextra -Werror
+FLAGS	= -g -fsanitize=address,leak #-Wall -Wextra -Werror
 RM		= rm -rf
 #REDLINE	= $(shell brew  --prefix readline)
 
@@ -33,7 +33,7 @@ $(LIBFT):
 	make -C $(LIBFTDIR)
 
 $(NAME) : $(OBJS)
-	$(CC) -lreadline $(FLAGS) $(LIBFTDIR)$(LIBFT) $(INCLUDE) $(OBJS) -o $@
+	$(CC) $(FLAGS) $(INCLUDE) -L $(LIBFTDIR) $(OBJS) -lreadline -lft  -o $@
 
 $(BUILD_DIR)/%.o : $(SRC_DIR)/%.c
 	mkdir -p $(BUILD_DIR)

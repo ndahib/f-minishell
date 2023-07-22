@@ -58,6 +58,7 @@ char	*obtain_cmd(char **token)
 {
 	char	*cmd;
 
+	cmd = NULL;
 	if (*token == NULL || token == NULL)
 		return (NULL);
 	while ((**token == '>' || **token == '<'))
@@ -67,14 +68,14 @@ char	*obtain_cmd(char **token)
 	}
 	if (*token != NULL)
 		cmd = ft_strjoin("", *token);
-	return (cmd);
+	return (cmd);    
 }
 
 t_simple_cmd	*create_node_cmd(t_env *env_var, char ***token)
 {
 	t_simple_cmd	*node;
 
-	node = malloc(sizeof(t_simple_cmd));
+	node = malloc(1 * sizeof(t_simple_cmd));
 	if (!node)
 	{
 		printf(RED ALLOC_ERR);
@@ -101,6 +102,8 @@ t_simple_cmd	*parse_simple_cmd(t_env *env_lst, char **token)
 		if (strchr(*token, '|') == NULL)
 		{
 			node_cmd = create_node_cmd(env_lst, &token);
+			if (node_cmd == NULL)
+				return (NULL);
 			add_at_end_cmd(&lst_of_cmd, node_cmd);
 		}
 		else

@@ -15,7 +15,6 @@
 int	minishell_loop(t_env **env_lst)
 {
 	char			**tokens;
-	int				state;
 	char			*cmd_line;
 	t_simple_cmd	*parse_cmd;
 
@@ -44,7 +43,6 @@ int	minishell_loop(t_env **env_lst)
 			// printf("succed in execution\n");
 		// free_lst_of_cmd(&parse_cmd);
 		// free_double_pointer(tokens);
-		// free(cmd_line);
 	}
 	return (1);
 }

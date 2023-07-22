@@ -34,24 +34,33 @@ char	*get_buffer(char *del, t_env *env)
 		ft_putstr_fd("> ", 1);
 		line = get_next_line(0);
 		if (ft_strncmp(line, new_del, ft_strlen(new_del)) == 0)
+		{
+			free(line);
 			break ;
+		}
 		final = ft_strjoin(final, line);
+		free(line);
+		line = NULL;
 	}
 	if (check == 0)
 	{
 		new_final = expand_her_doc(final, env);
+		if (ft_strlen(final) != 0)
+			free(final);
 		return (new_final);
 	}
+	free(del);
+	free(new_del);
 	return (final);
 }
 
 int	her_doc(char *del, t_env *env)
 {
 	int		fd[2];
-	int		len;
 	char	*buff;
-	int		pid;
+	pid_t	pid;
 
+	buff = "";
 	if (pipe(fd) == -1)
 		perror("pipe : ");
 	pid = fork();
@@ -72,7 +81,7 @@ int	her_doc(char *del, t_env *env)
 	}
 	close(fd[1]);
 	wait(NULL);
-	return fd[0];
+	return (fd[0]);
 }
 
 // int	check_and_dup(fd, duplicated_file)
@@ -84,7 +93,7 @@ int	her_doc(char *del, t_env *env)
 // 	return (0);
 // }
 
-int	redirections(t_files *files, t_env *env)
+int	redirections(t_files *files)
 {
 	int		fd;
 	t_files	*tmp;

@@ -52,7 +52,7 @@ int	execute_compound_cmnd(t_simple_cmd *cmd, t_env **env, int nbr)
 			else
 				close(pipe_fd[0]);
 			dup_fd(&input_fd, STDIN_FILENO);
-			if (redirections(cmd->files, *env) == 1)
+			if (redirections(cmd->files) == 1)
 				exit(EXIT_FAILURE);
 			if (cmd->fd != -1)
 			{
@@ -119,7 +119,7 @@ int	execute_one_simple_cmd(t_simple_cmd *one_cmd, t_env **env)
 			return ((perror("fork"), 1));
 		else if (!pid)
 		{
-			if(redirections(one_cmd->files, *env) == 1)
+			if(redirections(one_cmd->files) == 1)
 				return  (EXIT_FAILURE);
 			if (one_cmd->fd != -1)
 			{
@@ -128,12 +128,14 @@ int	execute_one_simple_cmd(t_simple_cmd *one_cmd, t_env **env)
 			}
 			if (one_cmd->path == NULL)
 			{
-				printf("minishell: command not found\n");;
+				printf("minishell: command not found\n");
+				free_double_pointer(env_array);
 				exit(127);
 			}
 			if (execve(one_cmd->path, one_cmd->arg, env_array) == -1)
 			{
-				perror("minishell:\n");;
+				perror("minishell:\n");
+				free_double_pointer(env_array);
 				exit(127);
 			}
 			else
@@ -153,7 +155,6 @@ int	execute_one_simple_cmd(t_simple_cmd *one_cmd, t_env **env)
 int	execute_commands(t_simple_cmd *cmnd, t_env **env)
 {
 	int		nbr;
-	pid_t	pid;
 	int		status;
 
 	nbr = get_number_of_cmds(cmnd);

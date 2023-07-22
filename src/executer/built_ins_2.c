@@ -145,10 +145,10 @@ int	is_built_ins(t_env **lst, t_simple_cmd *cmd)
 	std_fd[1] = dup(STDOUT_FILENO);
 	if (cmd->cmd == NULL)
 		return (1);
-	if (redirections(cmd->files, *lst) == 1)
+	if (redirections(cmd->files) == 1)
 		exit(EXIT_FAILURE);
 	if (ft_strncmp(cmd->cmd, "echo", 5) == 0)
-		my_echo(cmd->arg), 0;
+		my_echo(cmd->arg);
 	else if (ft_strncmp(cmd->cmd, "cd", 2) == 0)
 		my_cd(cmd, lst);
 	else if (ft_strncmp(cmd->cmd, "env", 3) == 0)

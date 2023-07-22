@@ -20,6 +20,8 @@ char	*obtain_path(char *command, t_env *env_list)
 	int		i;
 
 	i = 0;
+	if (command == NULL)
+		return (NULL);
 	cursor = my_getenv(env_list, "PATH");
 	if (cursor == NULL)	
 		return (free(cursor), NULL);
