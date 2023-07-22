@@ -129,13 +129,11 @@ int	execute_one_simple_cmd(t_simple_cmd *one_cmd, t_env **env)
 			if (one_cmd->path == NULL)
 			{
 				printf("minishell: command not found\n");
-				free_double_pointer(env_array);
 				exit(127);
 			}
-			if (execve(one_cmd->path, one_cmd->arg, env_array) == -1)
+			else if (execve(one_cmd->path, one_cmd->arg, env_array) == -1)
 			{
 				perror("minishell:\n");
-				free_double_pointer(env_array);
 				exit(127);
 			}
 			else

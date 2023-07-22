@@ -44,9 +44,10 @@ char	*get_buffer(char *del, t_env *env)
 	}
 	if (check == 0)
 	{
+		char *tmp;
+		tmp = ft_strdup(final);
 		new_final = expand_her_doc(final, env);
-		if (ft_strlen(final) != 0)
-			free(final);
+		free(tmp);
 		return (new_final);
 	}
 	free(del);

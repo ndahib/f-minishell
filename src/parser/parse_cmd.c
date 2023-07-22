@@ -59,7 +59,7 @@ char	*obtain_cmd(char **token)
 	char	*cmd;
 
 	cmd = NULL;
-	if (*token == NULL || token == NULL)
+	if (token == NULL || *token == NULL)
 		return (NULL);
 	while ((**token == '>' || **token == '<'))
 	{

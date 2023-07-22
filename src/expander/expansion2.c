@@ -152,6 +152,7 @@ char	**expander(t_env *env, char **arg)
 	char	*one_line;
 	char	*new_line;
 	char	**splited;
+	char 	*tmp;
 	char	**tmp_for_arg;
 
 	one_line = "";
@@ -162,10 +163,11 @@ char	**expander(t_env *env, char **arg)
 		one_line = ft_joinchar(one_line, ' ');
 		arg++;
 	}
+	tmp = ft_strdup(one_line);
 	new_line = expand_line(env, one_line);
 	splited = ft_split(new_line, '\2');
-	free(one_line);
+	free(tmp);
 	free_double_pointer(tmp_for_arg);
-	free(new_line);   
+	free(new_line);
 	return (splited);
 }

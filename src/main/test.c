@@ -22,7 +22,7 @@ int	minishell_loop(t_env **env_lst)
 	{
 		cmd_line = readline(BLUE"❄️ minishell ➡️ "GREEN);
 		if (!cmd_line)
-			exit(1);
+			exit(exit_status);
 		if (!cmd_line)
 			break ;
 		if (!ft_strlen(cmd_line))
@@ -42,7 +42,8 @@ int	minishell_loop(t_env **env_lst)
 			continue;
 			// printf("succed in execution\n");
 		// free_lst_of_cmd(&parse_cmd);
-		// free_double_pointer(tokens);
+		free_double_pointer(tokens);
+		free(cmd_line);
 	}
 	return (1);
 }
