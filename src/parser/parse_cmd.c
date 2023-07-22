@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 07:59:58 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/21 01:38:04 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/22 12:23:35 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,11 @@ t_simple_cmd	*create_node_cmd(t_env *env_var, char ***token)
 		printf(RED ALLOC_ERR);
 		return (NULL);
 	}
+	node->fd = -1;
 	node->arg = obtain_args(*token, env_var);
 	node->cmd =	obtain_cmd(node->arg);
 	node->path = obtain_path(node->cmd, env_var);
-	node->files = obtain_files(token);
+	node->files = obtain_files(token, &node, env_var);
 	node->next = NULL;
 	return (node);
 }

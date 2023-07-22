@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 20:29:54 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/17 23:33:22 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/22 12:21:28 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ struct s_simple_cmd
 	char			*path;
 	char			**arg;
 	t_files			*files;
+	int				fd;
 	t_simple_cmd	*next;
 };
 
 //*******************FUNCTIONS********************//
 t_env			*handle_env(char **env);
 t_env			*create_node(char *env);
-t_files			*obtain_files(char ***token);
 t_simple_cmd	*parse_simple_cmd(t_env *env_lst, char **token);
 /////////////////////////////////////////////////////
 int				len_of_var(char *var);
@@ -62,4 +62,11 @@ int				check_if_exist(t_env **lst, char **variable);
 void			add_at_end_cmd(t_simple_cmd **head, t_simple_cmd *node);
 /////////////////////////FREEE UTILS ///////////////////////////////////
 void			free_double_pointer(char **pointer);
+//////////////////////////EXPAND_HER_DOC/////////////////////////////////
+int				check_del(char *del);
+char			*remove_quotes(char *del);
+int				her_doc(char *del, t_env *env);
+char			*expand_her_doc(char *buff, t_env *env);
+void			obtain_value(t_env *env, char **new_arg, char **arg);
+t_files			*obtain_files(char ***token, t_simple_cmd **simple, t_env *env);
 #endif

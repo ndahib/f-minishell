@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 10:13:06 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/21 23:27:47 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/22 12:42:31 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,13 @@ int	execute_compound_cmnd(t_simple_cmd *cmd, t_env **env, int nbr)
 			else
 				close(pipe_fd[0]);
 			dup_fd(&input_fd, STDIN_FILENO);
-			if (redirections(cmd->files) == 1)
+			if (redirections(cmd->files, *env) == 1)
 				exit(EXIT_FAILURE);
+			if (cmd->fd != -1)
+			{
+				dup2(cmd->fd, 0);
+				close(cmd->fd);
+			}
 			if (is_built_ins(env, cmd) == 0)
 				exit(EXIT_SUCCESS);
 			else 
@@ -114,8 +119,13 @@ int	execute_one_simple_cmd(t_simple_cmd *one_cmd, t_env **env)
 			return ((perror("fork"), 1));
 		else if (!pid)
 		{
-			if(redirections(one_cmd->files) == 1)
+			if(redirections(one_cmd->files, *env) == 1)
 				return  (EXIT_FAILURE);
+			if (one_cmd->fd != -1)
+			{
+				dup2(one_cmd->fd, 0);
+				close(one_cmd->fd);
+			}
 			if (one_cmd->path == NULL)
 			{
 				printf("minishell: command not found\n");;

@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 09:03:39 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/21 15:42:17 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/22 11:58:08 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,31 +41,63 @@ int	check_redirection(char **tokens)
 	}
 	return (0);
 }
+int	nbr_of_quotes(char *token, char quote)
+{
+	int	i;
+
+	i = 0;
+	while (*token != '\0')
+	{
+		if (*token == quote)
+			i++;
+		token++;
+	}
+	return (i);
+}
+
+int	check(char *token, char quote)
+{
+	int	i;
+
+	i = 0;
+	while (token[i] != quote)
+	{
+		if (token[i + 1] == '\0' && token[i] ==  quote)
+		{
+			printf(RED PARSE_ERR"`'`\n");
+			return (1);					
+		}
+		i++;
+	}
+	return (i);	
+}
 
 int	check_quotes(char **tokens)
 {
 	int	i;
 
 	i = 0;
-	if ((*tokens)[0] == '"')
+	if (*tokens[i] == '"')
 	{
-		while ((*tokens)[i + 1] != '\0')
-			i++;
-		if ((*tokens)[i] != '"')
-		{
-			printf(RED PARSE_ERR"`\"'\n");
-			return (1);
-		}
-	}
-	else if ((*tokens)[0] == '\'')
-	{
-		while ((*tokens)[i + 1] != '\0')
-			i++;
-		if ((*tokens)[i] != '\'')
+		i = check(*tokens, '"');
+		if (*tokens[i] != '\0')
+			i = check(*tokens + i, '"');
+		if ((nbr_of_quotes(*tokens, '"') % 2 != 0))
 		{
 			printf(RED PARSE_ERR"`'`\n");
-			return (1);
-		}
+			return (1);					
+		}		
+	}
+	else if (*tokens[i] == '\'')
+	{
+		i = check(*tokens, '\'');
+		if (*tokens[i] != '\0')
+			i = check(*tokens + i, '\'');
+		if ((nbr_of_quotes(*tokens, '\'') % 2 != 0))
+		{
+			printf(RED PARSE_ERR"`'`\n");
+			return (1);					
+		}		
 	}
 	return (0);
 }

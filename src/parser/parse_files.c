@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:04:00 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/19 10:58:12 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/22 12:24:51 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ t_files	*create_node_files(char ***token)
 	ft_strlcpy(redir[0], "<", 2);
 	ft_strlcpy(redir[1], ">", 2);
 	ft_strlcpy(redir[2], ">>", 3);
-	ft_strlcpy(redir[3], "<<", 4);
-	while (i < 4)
+	while (i < 3)
 	{
 		if (ft_strncmp(**token, redir[i], ft_strlen(**token)) == 0
 			&& ft_strlen(**token) == ft_strlen(redir[i]))
@@ -48,7 +47,7 @@ t_files	*create_node_files(char ***token)
 				return (NULL);
 			(*token)++;
 			node->file = **token;
-			node->type = i + 3;
+			node->type = i + 2;
 			node->next = NULL;
 			return (node);
 		}
@@ -57,7 +56,7 @@ t_files	*create_node_files(char ***token)
 	return (NULL);
 }
 
-t_files	*obtain_files(char ***token)
+t_files	*obtain_files(char ***token, t_simple_cmd **simple, t_env *env)
 {
 	t_files	*file_node;
 	t_files	*file;
@@ -66,7 +65,13 @@ t_files	*obtain_files(char ***token)
 	file = NULL;
 	while (**token != NULL && ***token != '|')
 	{
-		if (***token == '>' || ***token == '<')
+		if (ft_strncmp(**token, "<<", 2) == 0)
+		{
+			if ((*simple)->fd != -1)
+				close((*simple)->fd);
+			(*simple)->fd = her_doc(*(*token + 1), env);
+		}
+		else if (***token == '>' || ***token == '<')
 		{
 			file = create_node_files(token);
 			obtain_name_and_type(&file_node, file);

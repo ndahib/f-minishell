@@ -6,31 +6,46 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:28:31 by yraiss            #+#    #+#             */
-/*   Updated: 2023/07/21 23:21:28 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/22 12:40:39 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_buffer(char *del)
+char	*get_buffer(char *del, t_env *env)
 {
 	char	*line;
 	char	*final;
+	char	*new_del;
+	char	*new_final;
+	int		check;
 
-	line = NULL;
 	final = "";
+	line = NULL;
+	new_del = NULL;
+	new_final = NULL;
+	check = check_del(del);
+	if (check == 1)
+		new_del = remove_quotes(del);
+	else
+		new_del = del;
 	while (1)
 	{
 		ft_putstr_fd("> ", 1);
 		line = get_next_line(0);
-		if (ft_strncmp(line, del, ft_strlen(del)) == 0)
+		if (ft_strncmp(line, new_del, ft_strlen(new_del)) == 0)
 			break ;
 		final = ft_strjoin(final, line);
+	}
+	if (check == 0)
+	{
+		new_final = expand_her_doc(final, env);
+		return (new_final);
 	}
 	return (final);
 }
 
-int	her_doc(char *del)
+int	her_doc(char *del, t_env *env)
 {
 	int		fd[2];
 	int		len;
@@ -48,9 +63,10 @@ int	her_doc(char *del)
 	else if (!pid)
 	{
 		close(fd[0]);
-		buff = get_buffer(del);
+		buff = get_buffer(del, env);
 		ft_putstr_fd(buff, fd[1]);
-		free(buff);
+		if (ft_strlen(buff) != 0)
+			free(buff);
 		close(fd[1]);
 		exit(EXIT_SUCCESS);
 	}
@@ -68,7 +84,7 @@ int	her_doc(char *del)
 // 	return (0);
 // }
 
-int	redirections(t_files *files)
+int	redirections(t_files *files, t_env *env)
 {
 	int		fd;
 	t_files	*tmp;
@@ -98,14 +114,6 @@ int	redirections(t_files *files)
 			if (fd == -1)
 				return (perror("OPEN : "), 1);
 			dup2(fd, 1);
-			close (fd);
-		}
-		else if (tmp->type == 6)
-		{
-			fd = her_doc(tmp->file);
-			if (fd == -1)
-				return (perror("herdoc : "), 1);
-			dup2(fd, 0);
 			close (fd);
 		}
 		tmp = tmp->next;

@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 22:36:18 by yraiss            #+#    #+#             */
-/*   Updated: 2023/07/21 01:58:21 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/22 10:50:16 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,3 +39,4 @@ void signals()
 	signal(EOF, handle_endoffile);
 	signal(SIGQUIT, handle_sigquit);
 }
+q

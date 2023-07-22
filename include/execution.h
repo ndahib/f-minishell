@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 12:52:25 by yraiss            #+#    #+#             */
-/*   Updated: 2023/07/21 23:27:22 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/22 10:28:38 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	exit_status;
 int		execute_commands(t_simple_cmd *cmnd, t_env **env);
 int		is_built_ins(t_env **lst, t_simple_cmd *cmd);
 int     check_is_built_ins(char *cmd);
-int		redirections(t_files *cmnd);
+int		redirections(t_files *cmnd, t_env *env);
 int     get_number_of_cmds(t_simple_cmd *cmnd);
 char	**convert_env_to_array(t_env *env);
 
