@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 10:13:06 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/22 12:42:31 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/23 11:54:46 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,12 @@ int	execute_one_simple_cmd(t_simple_cmd *one_cmd, t_env **env)
 		if (pid == -1)
 			return ((perror("fork"), 1));
 		else if (!pid)
-		{
-			if(redirections(one_cmd->files) == 1)
-				return  (EXIT_FAILURE);
+		{ 
+			if (one_cmd->files != NULL)
+			{
+				if(redirections(one_cmd->files) == 1)
+					return  (EXIT_FAILURE);
+			}
 			if (one_cmd->fd != -1)
 			{
 				dup2(one_cmd->fd, 0);
@@ -128,12 +131,12 @@ int	execute_one_simple_cmd(t_simple_cmd *one_cmd, t_env **env)
 			}
 			if (one_cmd->path == NULL)
 			{
-				printf("minishell: command not found\n");
+				printf("minishell: No such file or directory\n");
 				exit(127);
 			}
 			else if (execve(one_cmd->path, one_cmd->arg, env_array) == -1)
 			{
-				perror("minishell:\n");
+				perror("minishell: command not found\n");
 				exit(127);
 			}
 			else

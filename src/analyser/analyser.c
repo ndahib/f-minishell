@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 09:03:39 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/22 11:58:08 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/23 11:46:40 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ int	check_redirection(char **tokens)
 {
 	if (*(tokens + 1) == NULL)
 	{
-		printf(RED PARSE_ERR"`%s'\n", *tokens);
+		printf(RED "minishell: syntax error\n");
 		return (1);
 	}
 	else if (*(tokens + 1) != NULL)
 	{
 		if (check_file_name(*tokens, *(tokens + 1)) == 1)
 		{
-			printf(RED PARSE_ERR"`%s'\n", *tokens);
+			printf(RED "minishell: syntax error\n");
 			return (1);		
 		}
 	}

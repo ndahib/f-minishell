@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:28:31 by yraiss            #+#    #+#             */
-/*   Updated: 2023/07/22 12:40:39 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/23 11:44:48 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,13 @@ char	*get_buffer(char *del, t_env *env)
 		new_del = del;
 	while (1)
 	{
-		ft_putstr_fd("> ", 1);
-		line = get_next_line(0);
-		if (ft_strncmp(line, new_del, ft_strlen(new_del)) == 0)
+		line = readline(">");
+		if (!line || ft_strcmp(line, new_del) == 0)
 		{
 			free(line);
 			break ;
 		}
-		final = ft_strjoin(final, line);
-		free(line);
-		line = NULL;
+		final = ft_strjoin(final, ft_joinchar(line, '\n'));
 	}
 	if (check == 0)
 	{
@@ -63,7 +60,7 @@ int	her_doc(char *del, t_env *env)
 
 	buff = "";
 	if (pipe(fd) == -1)
-		perror("pipe : ");
+		perror("minishell : ");
 	pid = fork();
 	if (pid == -1)
 	{
@@ -106,7 +103,7 @@ int	redirections(t_files *files)
 		{
 			fd = open(tmp->file, O_RDWR | O_CREAT | O_TRUNC,  0644);
 			if (fd == -1)
-				return (perror("OPEN : "), 1);
+				return (perror("minishell "), 1);
 			dup2(fd, STDOUT_FILENO);
 			close (fd);
 		}
@@ -114,7 +111,7 @@ int	redirections(t_files *files)
 		{
 			fd = open(tmp->file, O_RDONLY);
 			if (fd == -1)
-				return (perror("OPEN : "), 1);
+				return (perror("minishell"), 1);
 			dup2(fd, 0);
 			close (fd);
 		}
@@ -122,7 +119,7 @@ int	redirections(t_files *files)
 		{
 			fd = open(tmp->file, O_RDWR | O_CREAT | O_APPEND, 0777);
 			if (fd == -1)
-				return (perror("OPEN : "), 1);
+				return (perror("minishell"), 1);
 			dup2(fd, 1);
 			close (fd);
 		}

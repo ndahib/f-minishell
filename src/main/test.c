@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:42:32 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/21 15:42:42 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/23 11:03:29 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ int	minishell_loop(t_env **env_lst)
 		cmd_line = readline(BLUE"❄️ minishell ➡️ "GREEN);
 		if (!cmd_line)
 			exit(exit_status);
-		if (!cmd_line)
-			break ;
 		if (!ft_strlen(cmd_line))
 			continue ;
 		else
@@ -34,16 +32,15 @@ int	minishell_loop(t_env **env_lst)
 		{
 			free_double_pointer(tokens);
 			free(cmd_line);
-			exit_status = 0;
+			exit_status = 2;
 			continue ;
 		}
 		parse_cmd = parse_simple_cmd(*env_lst, tokens);
-		if (execute_commands(parse_cmd, env_lst) == 0)
-			continue;
+		execute_commands(parse_cmd, env_lst);
 			// printf("succed in execution\n");
 		// free_lst_of_cmd(&parse_cmd);
-		free_double_pointer(tokens);
-		free(cmd_line);
+		// free_double_pointer(tokens);
+		// free(cmd_line);
 	}
 	return (1);
 }

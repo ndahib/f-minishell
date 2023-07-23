@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:04:00 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/22 12:24:51 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/23 10:12:40 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,14 @@ t_files	*create_node_files(char ***token)
 	ft_strlcpy(redir[2], ">>", 3);
 	while (i < 3)
 	{
-		if (ft_strncmp(**token, redir[i], ft_strlen(**token)) == 0
-			&& ft_strlen(**token) == ft_strlen(redir[i]))
+		if (ft_strcmp(**token, redir[i]) == 0)
 		{
 			node = malloc(sizeof(t_files));
 			if (node == NULL)
 				return (NULL);
 			(*token)++;
 			node->file = **token;
-			node->type = i + 2;
+			node->type = i + 3;
 			node->next = NULL;
 			return (node);
 		}
@@ -68,7 +67,10 @@ t_files	*obtain_files(char ***token, t_simple_cmd **simple, t_env *env)
 		if (ft_strncmp(**token, "<<", 2) == 0)
 		{
 			if ((*simple)->fd != -1)
+			{
 				close((*simple)->fd);
+				(*simple)->fd = -1;
+			}
 			(*simple)->fd = her_doc(*(*token + 1), env);
 		}
 		else if (***token == '>' || ***token == '<')

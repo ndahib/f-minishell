@@ -40,6 +40,7 @@ SRC		= 	ft_memset.c\
 			ft_striteri.c\
 			ft_joinchar.c\
 			ft_strcpy.c\
+			ft_strcmp.c\
 
 all: $(NAME)
 
