@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 07:59:58 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/23 15:02:02 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/23 15:55:53 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	**obtain_args(char	**token, t_env *env_var)
 			token += 2;
 		if (token[j] == NULL || *token[j] == '|')
 			return (NULL) ;
-		args[j] = ft_strjoin("", token[j]);
+		args[j] = ft_strdup(token[j]);
 		j++;
 	}
 	args[j] = NULL;
@@ -68,7 +68,7 @@ char	*obtain_cmd(char **token)
 			token += 2;
 	}
 	if (*token != NULL)
-		cmd = ft_strjoin("", *token);
+		cmd = ft_strdup(*token);
 	return (cmd);    
 }
 

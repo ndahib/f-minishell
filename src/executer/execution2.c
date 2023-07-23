@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 10:13:06 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/23 11:54:46 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/23 16:05:26 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	execute_compound_cmnd(t_simple_cmd *cmd, t_env **env, int nbr)
 				if (execve(cmd->path, cmd->arg, env_array) == -1)
 				{
 					perror("minishell:\n");
+					free_lst_of_cmd(&cmd);
+					free_double_pointer(env_array);
 					exit(127);
 				}
 				exit(EXIT_SUCCESS);	

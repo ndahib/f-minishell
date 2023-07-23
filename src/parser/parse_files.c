@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:04:00 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/23 10:12:40 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/23 15:57:39 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_files	*create_node_files(char ***token)
 			if (node == NULL)
 				return (NULL);
 			(*token)++;
-			node->file = **token;
+			node->file = ft_strdup(**token);
 			node->type = i + 3;
 			node->next = NULL;
 			return (node);

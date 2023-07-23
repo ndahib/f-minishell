@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:08:56 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/23 15:00:40 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/23 15:51:54 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ char	**expander(t_env *env, char **arg)
 	while (*arg != NULL)
 	{
 		one_line = ft_strjoin(one_line, *arg);
-		one_line = ft_joinchar(one_line, ' ');
+		one_line = ft_joinchar(one_line, '\2');
 		arg++;
 	}
 	new_line = expand_line(env, one_line);
