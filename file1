@@ -1,0 +1,13 @@
+total 112
+drwxr-xr-x  12 ndahib  candidates    408 Jul 23 13:34 .
+drwxr-xr-x  15 ndahib  candidates    510 Jul 23 13:22 ..
+drwxr-xr-x  13 ndahib  candidates    442 Jul 23 13:21 .git
+-rw-r--r--   1 ndahib  candidates   2266 Jul 23 11:31 Makefile
+drwxr-xr-x   8 ndahib  candidates    272 Jul 23 13:33 build
+-rw-r--r--   1 ndahib  candidates      0 Jul 23 13:34 file1
+-rw-r--r--   1 ndahib  candidates      2 Jul 23 11:52 foo
+drwxr-xr-x   9 ndahib  candidates    306 Jul 22 19:49 include
+drwxr-xr-x  80 ndahib  candidates   2720 Jul 23 13:33 libft
+-rwxr-xr-x   1 ndahib  candidates  43608 Jul 23 13:33 minishell
+drwxr-xr-x   8 ndahib  candidates    272 Jul 22 19:49 src
+-rw-r--r--   1 ndahib  candidates   1799 Jul 22 19:49 test.c

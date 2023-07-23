@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 07:59:58 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/23 11:19:50 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/23 15:02:02 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,19 @@ char	**obtain_args(char	**token, t_env *env_var)
 
 	j = 0;
 	len = token_nbr(token);
+	if (len == 0)
+		return (NULL);
 	args = malloc((len + 1) * sizeof(char *));
 	if (!args)
 		return (NULL);
-	while (j < len && *token != NULL)
+	while (j < len && token[j] != NULL)
 	{
-		while ((ft_strchr(*token, '>') != NULL
-			|| ft_strchr(*token, '<') != NULL) && *(token + 1) != NULL)
+		while ((ft_strchr(token[j], '>') != NULL
+			|| ft_strchr(token[j], '<') != NULL) && token[j + 1] != NULL)
 			token += 2;
-		if (*token == NULL || **token == '|')
-			break ;
-		args[j] = ft_strjoin("", *token);
-		token++;
+		if (token[j] == NULL || *token[j] == '|')
+			return (NULL) ;
+		args[j] = ft_strjoin("", token[j]);
 		j++;
 	}
 	args[j] = NULL;
