@@ -30,7 +30,7 @@ void	minishell_loop(t_env **env_lst)
 	parse_cmd = NULL;
 	while (1)
 	{
-		cmd_line = readline(RED"❄️ minishell ➡️ "CYAN);
+		cmd_line = readline(RED"minishell->"CYAN);
 		if (!cmd_line)
 			exit(g_exit_status);
 		if (!ft_strlen(cmd_line))

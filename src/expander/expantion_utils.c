@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 19:18:30 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/24 00:42:32 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/24 11:02:14 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ void	expande_inside_quotes(char **new_arg, char **arg, t_env *env)
 	}
 	else if (*(*arg + 1) == '?')
 	{
-		*new_arg = ft_strjoin(*new_arg, ft_itoa(g_exit_status));
+		char *exit;
+		exit = ft_itoa(g_exit_status);
+		*new_arg = ft_strjoin(*new_arg, exit);
+		free(exit);
 		(*arg) += 2;
 	}
 	else

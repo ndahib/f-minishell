@@ -6,13 +6,13 @@
 #    By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/19 15:58:03 by ndahib            #+#    #+#              #
-#    Updated: 2023/07/24 00:43:51 by ndahib           ###   ########.fr        #
+#    Updated: 2023/07/24 12:28:52 by ndahib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #COMMANDS#
 CC		= cc 
-FLAGS	= -g -fsanitize=address,leak -Wall -Wextra -Werror
+FLAGS	= #-g -fsanitize=address -Wall -Wextra -Werror
 RM		= rm -rf
 #REDLINE	= $(shell brew  --prefix readline)
 
@@ -33,7 +33,8 @@ $(LIBFT):
 	make -C $(LIBFTDIR)
 
 $(NAME) : $(OBJS)
-	$(CC) $(FLAGS) -lreadline $(INCLUDE) -L $(LIBFTDIR) $(OBJS) -lreadline -lft -o $@
+	# $(CC) $(FLAGS)  $(INCLUDE) $(LIBFTDIR)$(LIBFT) $(OBJS) -lreadline -o $@
+	$(CC) $(FLAGS) $(INCLUDE) -L $(LIBFTDIR) $(OBJS) -lreadline -lft -o $@
 
 $(BUILD_DIR)/%.o : $(SRC_DIR)/%.c
 	mkdir -p $(BUILD_DIR)

@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:08:56 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/23 21:35:48 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/24 11:02:01 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,13 @@ void	obtain_value(t_env *env, char **new_arg, char **arg)
 {
 	char	*value;
 	char	*cursor;
+	char	*sub;
 
 	if (ft_isalpha(*(*arg + 1)) == 1 || *(*arg + 1) == '_')
 	{
-		cursor = my_getenv(env, ft_substr(*arg, 1, len_of_var(*arg + 1)));
+		sub = ft_substr(*arg, 1, len_of_var(*arg + 1));
+		cursor = my_getenv(env, sub);
+		free(sub);
 		value = ft_strjoin("", cursor);
 		free (cursor);
 		cursor = value;
@@ -32,7 +35,10 @@ void	obtain_value(t_env *env, char **new_arg, char **arg)
 	}
 	else if (*(*arg + 1) == '?')
 	{
-		*new_arg = ft_strjoin(*new_arg, ft_itoa(g_exit_status));
+		char *exit;
+		exit = ft_itoa(g_exit_status);
+		*new_arg = ft_strjoin(*new_arg, exit);
+		free(exit);
 		(*arg) += 2;
 	}
 	else if (*arg + 1 != NULL)

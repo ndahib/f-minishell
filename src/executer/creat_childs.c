@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:15:45 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/24 10:17:03 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/24 12:26:54 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	execute_cmd(t_simple_cmd *cmd, char **env_array)
 		free_double_pointer(env_array);
 		exit(127);
 	}
+	free_double_pointer(env_array);
 	exit(EXIT_SUCCESS);
 }
 
@@ -76,12 +77,12 @@ void	create_childs(t_simple_cmd *cmd, t_env **env, int *pipe_fd, int *fd, int i)
 	pid_t		pid;
 	char		**env_arr;
 
-	env_arr = convert_env_to_array(*env);
 	pid = fork();
 	if (pid == -1)
 		perror("fork :");
 	if (pid == 0)
 	{
+		env_arr = convert_env_to_array(*env);
 		dup_fd(&pipe_fd[1], STDOUT_FILENO);
 		if (i != 0)
 			dup_fd(&pipe_fd[0], STDIN_FILENO);
@@ -97,6 +98,7 @@ void	create_childs(t_simple_cmd *cmd, t_env **env, int *pipe_fd, int *fd, int i)
 		else
 			execute_cmd(cmd, env_arr);
 		free_double_pointer(env_arr);
+		exit(EXIT_FAILURE);
 	}
 }
 

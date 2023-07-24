@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 08:04:04 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/23 19:37:23 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/24 11:24:51 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,16 +100,22 @@ void	my_pwd(void)
 
 int	my_cd(t_simple_cmd *cmnd, t_env **env)
 {
+	char	*home;
+
 	old_pwd(env);
 	if (cmnd->arg[1] == NULL)
 	{
-		if (!chdir(getenv("HOME")))
-			return (new_pwd(env), 1);
+		home = my_getenv(*env, "HOME");
+		if (home == NULL)
+			return (ft_putstr_fd("minishell: cd: HOME not set\n", 2), 1);
+		if (!chdir(home))
+			return (new_pwd(env), 0);
 		else
-			return (perror("minishell :"), 0);
+			return (perror("minishell :"), 1);
 	}
 	if (!chdir(cmnd->arg[1]))
-		return (new_pwd(env), 1);
+		return (new_pwd(env), 0);
 	else
-		return (perror("minishell :"), 0);
+		return (perror("minishell :"), 1);
 }
+/////return value
