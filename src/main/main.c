@@ -6,16 +6,15 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:42:32 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/24 00:21:48 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/24 16:29:05 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_all(t_simple_cmd *lst, char **tokens, char *line)
+void	free_all(t_simple_cmd **lst, char **tokens, char *line)
 {
-	if (lst != NULL)
-		free_lst_of_cmd(&lst);
+	free_lst_of_cmd(lst);
 	free_double_pointer(tokens);
 	free(line);
 }
@@ -30,7 +29,7 @@ void	minishell_loop(t_env **env_lst)
 	parse_cmd = NULL;
 	while (1)
 	{
-		cmd_line = readline(RED"minishell->"CYAN);
+		cmd_line = readline("minishell->"RED);
 		if (!cmd_line)
 			exit(g_exit_status);
 		if (!ft_strlen(cmd_line))
@@ -50,7 +49,7 @@ void	minishell_loop(t_env **env_lst)
 		}
 		parse_cmd = parse_simple_cmd(*env_lst, tokens);
 		execute_commands(parse_cmd, env_lst);
-		free_all(parse_cmd, tokens, cmd_line);
+		free_all(&parse_cmd, tokens, cmd_line);
 	}
 }
 

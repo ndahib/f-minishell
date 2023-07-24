@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 10:52:52 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/23 21:39:14 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/24 16:33:27 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**convert_env_to_array(t_env *env)
 	while (env != NULL && i < count)
 	{
 		if (env->env != NULL)
-			env_arr[i] = ft_strjoin("", env->env);
+			env_arr[i] = ft_strdup(env->env);
 		i++;
 		env = env->next;
 	}
@@ -69,7 +69,12 @@ int	check_redir(t_files *files)
 	if (files != NULL)
 	{
 		if (redirections(files) == 1)
-			return (EXIT_FAILURE);
+		{
+			{
+				g_exit_status = 1;
+				return (g_exit_status);
+			}
+		}
 	}
 	return (EXIT_SUCCESS);
 }

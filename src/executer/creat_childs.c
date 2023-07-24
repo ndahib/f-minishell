@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:15:45 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/24 12:26:54 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/24 17:24:09 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	create_child(t_simple_cmd *one_cmd, char **env)
 		perror("fork :");
 	else if (!pid)
 	{
-		if (check_redir(one_cmd->files) == 1)
-			return ;
 		if (one_cmd->fd != -1)
 			dup_close(one_cmd->fd);
+		if (check_redir(one_cmd->files) == 1)
+			exit(EXIT_FAILURE);
 		if (!one_cmd->path)
 		{
 			printf("minishell: command not found\n");
@@ -67,12 +67,11 @@ void	execute_cmd(t_simple_cmd *cmd, char **env_array)
 		free_double_pointer(env_array);
 		exit(127);
 	}
-	free_double_pointer(env_array);
 	exit(EXIT_SUCCESS);
 }
 
 //***************create_child_for_multiples_cmds*******************************
-void	create_childs(t_simple_cmd *cmd, t_env **env, int *pipe_fd, int *fd, int i)
+void	create_childs(t_simple_cmd *cmd, t_env **env, t_pipe_files *var)
 {
 	pid_t		pid;
 	char		**env_arr;
@@ -80,25 +79,24 @@ void	create_childs(t_simple_cmd *cmd, t_env **env, int *pipe_fd, int *fd, int i)
 	pid = fork();
 	if (pid == -1)
 		perror("fork :");
+	env_arr = NULL;
 	if (pid == 0)
 	{
 		env_arr = convert_env_to_array(*env);
-		dup_fd(&pipe_fd[1], STDOUT_FILENO);
-		if (i != 0)
-			dup_fd(&pipe_fd[0], STDIN_FILENO);
+		dup_fd(&(var->pipe_fd[1]), STDOUT_FILENO);
+		if (var->i != 0)
+			dup_fd(&(var->pipe_fd[0]), STDIN_FILENO);
 		else
-			close(pipe_fd[0]);
-		dup_fd(fd, STDIN_FILENO);
+			close(var->pipe_fd[0]);
+		dup_fd(&(var->input_fd), STDIN_FILENO);
 		if (check_redir(cmd->files) == 1)
-			exit(EXIT_FAILURE) ;
+			exit(EXIT_FAILURE);
 		if (cmd->fd != -1)
 			dup_close(cmd->fd);
 		if (is_built_ins(env, cmd) == 0)
 			exit(EXIT_SUCCESS);
 		else
 			execute_cmd(cmd, env_arr);
-		free_double_pointer(env_arr);
-		exit(EXIT_FAILURE);
 	}
 }
 

@@ -6,30 +6,30 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:28:31 by yraiss            #+#    #+#             */
-/*   Updated: 2023/07/24 00:41:59 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/24 17:18:23 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_buffer(char *del, t_env *env)
+char	*new_final(char *final, t_env *env)
 {
-	char	*line;
-	char	*final;
-	char	*new_del;
-	char	*new_final;
-	int		check;
 	char	*tmp;
+	char	*new_final;
+
+	tmp = ft_strdup(final);
+	new_final = expand_her_doc(final, env);
+	free(tmp);
+	return (new_final);
+}
+
+char	*herdoc_line(char *new_del)
+{
+	char	*final;
+	char	*line;
 
 	final = "";
 	line = NULL;
-	new_del = NULL;
-	new_final = NULL;
-	check = check_del(del);
-	if (check == 1)
-		new_del = remove_quotes(del);
-	else
-		new_del = del;
 	while (1)
 	{
 		line = readline(">");
@@ -40,13 +40,27 @@ char	*get_buffer(char *del, t_env *env)
 		}
 		final = ft_strjoin(final, ft_joinchar(line, '\n'));
 	}
+	return (final);
+}
+
+char	*get_buffer(char *del, t_env *env)
+{
+	char	*line;
+	char	*final;
+	char	*new_del;
+	int		check;
+
+	final = "";
+	line = NULL;
+	new_del = NULL;
+	check = check_del(del);
+	if (check == 1)
+		new_del = remove_quotes(del);
+	else
+		new_del = del;
+	final = herdoc_line(new_del);
 	if (check == 0)
-	{
-		tmp = ft_strdup(final);
-		new_final = expand_her_doc(final, env);
-		free(tmp);
-		return (new_final);
-	}
+		return (new_final(final, env));
 	free(del);
 	free(new_del);
 	return (final);
@@ -60,13 +74,10 @@ int	her_doc(char *del, t_env *env)
 
 	buff = "";
 	if (pipe(fd) == -1)
-		perror("minishell : ");
+		return (perror("minishell : "), -1);
 	pid = fork();
 	if (pid == -1)
-	{
-		perror("fork in herdoc : \n");
-		return (-1);
-	}
+		return (perror("fork in herdoc : \n"), -1);
 	else if (!pid)
 	{
 		close(fd[0]);
@@ -82,17 +93,8 @@ int	her_doc(char *del, t_env *env)
 	return (fd[0]);
 }
 
-// int	check_and_dup(fd, duplicated_file)
-// {
-// 	if (fd == -1)
-// 		return (1);
-// 	dup2(fd, duplicated_file);
-// 	close (fd);
-// 	return (0);
-// }
 int	redirections(t_files *files)
 {
-	int		fd;
 	t_files	*tmp;
 
 	tmp = files;
@@ -100,27 +102,18 @@ int	redirections(t_files *files)
 	{
 		if (tmp->type == 4)
 		{
-			fd = open(tmp->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
-			if (fd == -1)
-				return (perror("minishell "), 1);
-			dup2(fd, STDOUT_FILENO);
-			close (fd);
+			if (out_redirection(tmp->file) == 1)
+				return (1);
 		}
 		else if (tmp->type == 3)
 		{
-			fd = open(tmp->file, O_RDONLY);
-			if (fd == -1)
-				return (perror("minishell"), 1);
-			dup2(fd, 0);
-			close (fd);
+			if (in_redirection(tmp->file) == 1)
+				return (1);
 		}
 		else if (tmp->type == 5)
 		{
-			fd = open(tmp->file, O_RDWR | O_CREAT | O_APPEND, 0777);
-			if (fd == -1)
-				return (perror("minishell"), 1);
-			dup2(fd, 1);
-			close (fd);
+			if (append_redirection(tmp->file) == 1)
+				return (1);
 		}
 		tmp = tmp->next;
 	}

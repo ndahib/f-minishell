@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 19:37:37 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/23 19:43:05 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/24 17:01:08 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	is_built_ins(t_env **lst, t_simple_cmd *cmd)
 	std_fd[0] = dup(STDIN_FILENO);
 	std_fd[1] = dup(STDOUT_FILENO);
 	if (redirections(cmd->files) == 1)
-		exit(EXIT_FAILURE);
+		return (1);
 	if (ft_strncmp(cmd->cmd, "echo", 5) == 0)
 		my_echo(cmd->arg);
 	else if (ft_strncmp(cmd->cmd, "cd", 2) == 0)

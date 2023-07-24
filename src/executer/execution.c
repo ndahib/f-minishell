@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:06:13 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/24 10:17:38 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/24 17:17:01 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,21 @@ void	dup_fd(int *pipe, int fd)
 
 int	execute_compound_cmnd(t_simple_cmd *cmd, t_env **env, int nbr)
 {
-	int		i;
-	int		pipe_fd[2];
-	int		input_fd;
+	t_pipe_files	var;
 
-	i = -1;
-	input_fd = -1;
-	pipe_fd[0] = -1;
-	pipe_fd[1] = -1;
-	while (++i < nbr)
+	var.i = -1;
+	var.input_fd = -1;
+	var.pipe_fd[0] = -1;
+	var.pipe_fd[1] = -1;
+	while (++(var.i) < nbr)
 	{
-		if (i != nbr - 1)
-			pipe(pipe_fd);
-		create_childs(cmd, env, pipe_fd, &input_fd, i);
-		dup_fd(&input_fd, -1);
-		copy_input_to_fd(&input_fd, pipe_fd);
-		dup_fd(&pipe_fd[1], -1);
-		dup_fd(&pipe_fd[0], -1);
+		if (var.i != nbr - 1)
+			pipe(var.pipe_fd);
+		create_childs(cmd, env, &var);
+		dup_fd(&(var.input_fd), -1);
+		copy_input_to_fd(&(var.input_fd), (var.pipe_fd));
+		dup_fd(&(var.pipe_fd[1]), -1);
+		dup_fd(&(var.pipe_fd[0]), -1);
 		cmd = cmd->next;
 	}
 	wait_childs(nbr);

@@ -6,12 +6,20 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 12:52:25 by yraiss            #+#    #+#             */
-/*   Updated: 2023/07/24 10:17:16 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/24 17:26:58 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
+
+//*******************STRCUT****************************************************
+typedef struct s_pipe_files
+{
+	int	pipe_fd[2];
+	int	input_fd;
+	int	i;
+}	t_pipe_files;
 
 //*******************FUNCTIONS*************************************************
 
@@ -57,5 +65,10 @@ int		check_redir(t_files *files);
 void	copy_input_to_fd(int *input_fd, int *pipe_fd);
 void	create_child(t_simple_cmd *one_cmd, char **env);
 void	execute_cmd(t_simple_cmd *cmd, char **env_arr);
-void	create_childs(t_simple_cmd *cmd, t_env **env, int *pipe_fd, int *fd, int i);
+void	create_childs(t_simple_cmd *cmd, t_env **env, t_pipe_files *var);
+//**************************REDIRECTION****************************************
+int		in_redirection(char *file);
+int		out_redirection(char *file);
+int		append_redirection(char *file);
+
 #endif
