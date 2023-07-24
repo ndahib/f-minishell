@@ -6,11 +6,11 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 09:02:42 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/19 12:29:41 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/23 18:42:10 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 char	*quotes(char **line, char sep)
 {

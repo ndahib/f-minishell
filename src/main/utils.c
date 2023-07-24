@@ -6,35 +6,34 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 11:40:38 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/23 15:41:16 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/24 00:20:38 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	printf_double_pointer(char **arr)
-{
-	if (arr == NULL)
-		return ;
-	while (*arr != NULL)
-	{
-		printf(RED"THE argument :%s\n", *arr);
-		arr++;
-	}
-}
+// void	printf_double_pointer(char **arr)
+// {
+// 	if (arr == NULL)
+// 		return ;
+// 	while (*arr != NULL)
+// 	{
+// 		printf(RED"THE argument :%s\n", *arr);
+// 		arr++;
+// 	}
+// }
 
 int	len_of_var(char *var)
 {
 	int	count;
 
 	count = 0;
-
 	if (*var == '$')
 		return (0);
 	while (*var)
 	{
 		if (ft_isdigit(*var) == 0 && ft_isalpha(*var) == 0 && *var != '_')
-			break;
+			break ;
 		count++;
 		var++;
 	}
@@ -99,34 +98,3 @@ char	*skip_space(char *line)
 		line++;
 	return (line);
 }
-
-void	free_files(t_files **files)
-{
-	t_files	*tmp;
-
-	tmp = *files;
-	if (files == NULL || *files == NULL)
-		return ;
-	while (tmp != NULL)
-	{
-		free(tmp->file);
-		tmp = tmp->next;
-	}
-	free(*files);
-}
-
-void	free_lst_of_cmd(t_simple_cmd **head)
-{
-	t_simple_cmd	*tmp;
-
-	tmp = *head;
-	while (tmp != NULL)
-	{
-		free(tmp->cmd);
-		free(tmp->path);
-		free_double_pointer(tmp->arg);
-		free_files(&tmp->files);
-		tmp = tmp->next;		
-	}
-	free(*head);
-} 

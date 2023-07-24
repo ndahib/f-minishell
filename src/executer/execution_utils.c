@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 10:52:52 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/22 12:30:04 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/23 21:39:14 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,35 @@ char	**convert_env_to_array(t_env *env)
 	}
 	env_arr[i] = NULL;
 	return (env_arr);
+}
+
+void	wait_childs(int nbr)
+{
+	int	i;
+	int	status;
+
+	i = 0;
+	while (i < nbr)
+	{
+		wait(&status);
+		if (WIFEXITED(status))
+			g_exit_status = WEXITSTATUS(status);
+		i++;
+	}
+}
+
+int	check_redir(t_files *files)
+{
+	if (files != NULL)
+	{
+		if (redirections(files) == 1)
+			return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}
+
+void	dup_close(int fd)
+{
+	dup2(fd, 0);
+	close(fd);
 }

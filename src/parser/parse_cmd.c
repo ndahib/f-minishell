@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 07:59:58 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/23 15:55:53 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/23 19:00:18 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ char	**obtain_args(char	**token, t_env *env_var)
 	while (j < len && token[j] != NULL)
 	{
 		while ((ft_strchr(token[j], '>') != NULL
-			|| ft_strchr(token[j], '<') != NULL) && token[j + 1] != NULL)
+				|| ft_strchr(token[j], '<') != NULL) && token[j + 1] != NULL)
 			token += 2;
 		if (token[j] == NULL || *token[j] == '|')
-			return (NULL) ;
+			return (NULL);
 		args[j] = ft_strdup(token[j]);
 		j++;
 	}
@@ -69,7 +69,7 @@ char	*obtain_cmd(char **token)
 	}
 	if (*token != NULL)
 		cmd = ft_strdup(*token);
-	return (cmd);    
+	return (cmd);
 }
 
 t_simple_cmd	*create_node_cmd(t_env *env_var, char ***token)
@@ -84,7 +84,7 @@ t_simple_cmd	*create_node_cmd(t_env *env_var, char ***token)
 	}
 	node->fd = -1;
 	node->arg = obtain_args(*token, env_var);
-	node->cmd =	obtain_cmd(node->arg);
+	node->cmd = obtain_cmd(node->arg);
 	node->path = obtain_path(node->cmd, env_var);
 	node->files = obtain_files(token, &node, env_var);
 	node->next = NULL;

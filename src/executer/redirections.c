@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:28:31 by yraiss            #+#    #+#             */
-/*   Updated: 2023/07/23 15:35:30 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/24 00:41:59 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char	*get_buffer(char *del, t_env *env)
 	char	*new_del;
 	char	*new_final;
 	int		check;
+	char	*tmp;
 
 	final = "";
 	line = NULL;
@@ -41,7 +42,6 @@ char	*get_buffer(char *del, t_env *env)
 	}
 	if (check == 0)
 	{
-		char *tmp;
 		tmp = ft_strdup(final);
 		new_final = expand_her_doc(final, env);
 		free(tmp);
@@ -90,7 +90,6 @@ int	her_doc(char *del, t_env *env)
 // 	close (fd);
 // 	return (0);
 // }
-
 int	redirections(t_files *files)
 {
 	int		fd;
@@ -101,7 +100,7 @@ int	redirections(t_files *files)
 	{
 		if (tmp->type == 4)
 		{
-			fd = open(tmp->file, O_RDWR | O_CREAT | O_TRUNC,  0644);
+			fd = open(tmp->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
 			if (fd == -1)
 				return (perror("minishell "), 1);
 			dup2(fd, STDOUT_FILENO);

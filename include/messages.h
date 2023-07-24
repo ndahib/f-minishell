@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 16:14:38 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/19 16:48:22 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/23 21:30:30 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
 # define EXPORT_VAR		"_=/Users/ndahib/Desktop/minishell1/./minishell"
 # define OUT_OF_RANGE	"bash: exit: %s: numeric argument required\n"
 
-//////////////////FUNCTIONS////////////////////////
+//////////////////FUNCTIONS_THAT_PRINT////////////////////////
 
 void	printf_double_pointer(char **arr);
+
 #endif

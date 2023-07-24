@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 16:18:38 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/19 11:19:47 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/23 18:20:19 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,11 @@
 # include <readline/history.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include "messages.h"
+# include "color.h"
+# include "lexer.h"
+# include "../libft/libft.h"
+# include "parsing.h"
+# include "execution.h"
 
 #endif

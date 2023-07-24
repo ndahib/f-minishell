@@ -6,23 +6,11 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 20:30:56 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/17 23:33:05 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/23 18:40:09 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// void	print_lst(t_env *lst)
-// {
-// 	t_env	*head;
-
-// 	head = lst;
-// 	while (head->next)
-// 	{
-// 		printf("%s\n", head->env);
-// 		head- = head->next;
-// 	}
-// }
 
 t_env	*create_node(char *env)
 {

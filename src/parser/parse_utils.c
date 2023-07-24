@@ -6,16 +6,38 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 12:50:38 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/21 16:57:54 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/23 21:44:12 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*join_and_check(char *split_path, char *command)
+{
+	char	*cursor;
+	char	*right_path;
+
+	right_path = ft_joinchar(ft_strdup(split_path), '/');
+	cursor = ft_strjoin(right_path, command);
+	if (access(cursor, X_OK) != -1)
+	{
+		free(cursor);
+		cursor = ft_joinchar(ft_strdup(split_path), '/');
+		cursor = ft_strjoin(cursor, command);
+		return (cursor);
+	}
+	else if (access(command, X_OK) != -1)
+	{
+		free(cursor);
+		return (command);
+	}
+	free(cursor);
+	return (NULL);
+}
+
 char	*obtain_path(char *command, t_env *env_list)
 {
 	char	**split_paths;
-	char	*right_path;
 	char	*cursor;
 	int		i;
 
@@ -23,29 +45,18 @@ char	*obtain_path(char *command, t_env *env_list)
 	if (command == NULL)
 		return (NULL);
 	cursor = my_getenv(env_list, "PATH");
-	if (cursor == NULL)	
+	if (cursor == NULL)
 		return (free(cursor), NULL);
 	split_paths = ft_split(cursor, ':');
 	free(cursor);
 	while (split_paths[i] != NULL)
 	{
-		right_path = ft_joinchar(ft_strdup(split_paths[i]), '/');
-		cursor = ft_strjoin(right_path, command);
-		if (access(cursor, X_OK) != -1)
+		cursor = join_and_check(split_paths[i], command);
+		if (cursor != NULL)
 		{
-			free(cursor);
-			cursor = ft_joinchar(ft_strdup(split_paths[i]), '/');
-			cursor = ft_strjoin(cursor, command);
 			free_double_pointer(split_paths);
 			return (cursor);
 		}
-		else if (access(command, X_OK) != -1)
-		{
-			free(cursor);
-			free_double_pointer(split_paths);
-			return (command);
-		}
-		free(cursor);
 		i++;
 	}
 	free_double_pointer(split_paths);
