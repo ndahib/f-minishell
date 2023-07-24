@@ -35,15 +35,18 @@ void	join_and_increment(char **new_arg, char **arg)
 void	expande_inside_quotes(char **new_arg, char **arg, t_env *env)
 {
 	char	*cursor;
+	char	*sub;
 	char	*value;
 
-	cursor = my_getenv(env, ft_substr(*arg, 1, len_of_var(*arg + 1)));
+	sub = ft_substr(*arg, 1, len_of_var(*arg + 1));
+	cursor = my_getenv(env, sub);
+	free(sub);
 	value = ft_strjoin("", cursor);
 	free(cursor);
 	cursor = ft_strdup(value);
 	if (ft_strlen(cursor) != 0)
 	{
-		*new_arg = ft_strjoin(*new_arg, ft_strdup(cursor));
+		*new_arg = ft_strjoin(*new_arg, cursor);
 		free(cursor);
 	}
 	else if (*(*arg + 1) == '?')

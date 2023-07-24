@@ -25,7 +25,6 @@ int	execute_compound_cmnd(t_simple_cmd *cmd, t_env **env, int nbr)
 	int		i;
 	int		pipe_fd[2];
 	int		input_fd;
-	char	**env_arr;
 
 	i = -1;
 	input_fd = -1;
