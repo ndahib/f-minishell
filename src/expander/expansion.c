@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yraiss <yraiss@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 13:49:24 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/23 19:15:59 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/25 00:53:38 by yraiss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ char	*obtain_his_value(char *env_var)
 		value[i] = *env_var;
 		env_var++;
 	}
-	value[i] = '\0';
 	return (value);
 }
 

@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yraiss <yraiss@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 11:40:38 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/24 00:20:38 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/24 19:59:42 by yraiss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	printf_double_pointer(char **arr)
-// {
-// 	if (arr == NULL)
-// 		return ;
-// 	while (*arr != NULL)
-// 	{
-// 		printf(RED"THE argument :%s\n", *arr);
-// 		arr++;
-// 	}
-// }
+void	printf_double_pointer(char **arr)
+{
+	if (arr == NULL)
+		return ;
+	while (*arr != NULL)
+	{
+		printf(RED"THE argument :%s\n", *arr);
+		arr++;
+	}
+}
 
 int	len_of_var(char *var)
 {

@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 12:52:25 by yraiss            #+#    #+#             */
-/*   Updated: 2023/07/24 17:26:58 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/25 12:28:23 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ void	new_pwd(t_env **env);
 void	old_pwd(t_env **env);
 void	new_pwd(t_env **env);
 void	old_pwd(t_env **env);
-void	my_pwd(void);
+int		my_pwd(void);
 void	my_exit(char **arg);
-void	my_echo(char **arg);
-void	my_env(t_env **lst);
-void	my_export(t_env ***lst, char **args);
+int		my_echo(char **arg);
+int		my_env(t_env **lst);
+int		my_export(t_env ***lst, char **args);
 void	unset_variable(t_env ***lst, char *arg);
 int		my_cd(t_simple_cmd *cmnd, t_env **env);
 int		run_built_ins(t_env **env, t_simple_cmd *cmd);
@@ -70,5 +70,6 @@ void	create_childs(t_simple_cmd *cmd, t_env **env, t_pipe_files *var);
 int		in_redirection(char *file);
 int		out_redirection(char *file);
 int		append_redirection(char *file);
+void    handle_sig(int sig);
 
 #endif

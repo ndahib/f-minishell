@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yraiss <yraiss@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:40:56 by yraiss            #+#    #+#             */
-/*   Updated: 2023/07/23 19:44:42 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/25 01:53:15 by yraiss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,18 @@ int	count_env(t_env *envr)
 
 int	check_is_nbr(char *arg)
 {
+	int	i;
+	
+	i = 0;
 	if (arg == NULL)
 		return (1);
-	while (*arg != '\0')
+	if (arg[0] == '-')
+		i++;
+	while (arg[i] != '\0')
 	{
-		if (ft_isdigit(*arg) == 0)
+		if (ft_isdigit(arg[i]) == 0)
 			return (1);
-		arg++;
+		i++;
 	}
 	return (0);
 }

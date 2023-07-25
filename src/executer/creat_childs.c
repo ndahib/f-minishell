@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:15:45 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/24 17:24:09 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/25 15:33:47 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,28 @@ void	copy_input_to_fd(int *input_fd, int *pipe_fd)
 	}
 }
 
+void	execute_cmd(t_simple_cmd *cmd, char **env_array)
+{
+	int		on;
+
+	on = 0;
+	if (cmd->path == NULL)
+	{
+		printf("minishell : command not found\n");
+		free_lst_of_cmd(&cmd, 0);
+		free_double_pointer(env_array);
+		exit(127);
+	}
+	if (execve(cmd->path, cmd->arg, env_array) == -1)
+	{
+		perror("minishell:\n");
+		free_lst_of_cmd(&cmd, on);
+		free_double_pointer(env_array);
+		exit(127);
+	}
+	exit(EXIT_SUCCESS);
+}
+
 //***************create_child_forone_cmd***************************************
 void	create_child(t_simple_cmd *one_cmd, char **env)
 {
@@ -29,45 +51,16 @@ void	create_child(t_simple_cmd *one_cmd, char **env)
 	pid = fork();
 	if (pid == -1)
 		perror("fork :");
-	else if (!pid)
+	if (pid == 0)
 	{
 		if (one_cmd->fd != -1)
 			dup_close(one_cmd->fd);
 		if (check_redir(one_cmd->files) == 1)
 			exit(EXIT_FAILURE);
-		if (!one_cmd->path)
-		{
-			printf("minishell: command not found\n");
-			exit(127);
-		}
-		else if (execve(one_cmd->path, one_cmd->arg, env) == -1)
-		{
-			perror("minishell: command not found\n");
-			exit(127);
-		}
-		else
-			exit(EXIT_SUCCESS);
+		execute_cmd(one_cmd, env);
+		exit(EXIT_SUCCESS);
 	}
 	wait_childs(1);
-}
-
-void	execute_cmd(t_simple_cmd *cmd, char **env_array)
-{
-	if (cmd->path == NULL)
-	{
-		printf("minishell : command not found\n");
-		free_lst_of_cmd(&cmd);
-		free_double_pointer(env_array);
-		exit(127);
-	}
-	if (execve(cmd->path, cmd->arg, env_array) == -1)
-	{
-		perror("minishell:\n");
-		free_lst_of_cmd(&cmd);
-		free_double_pointer(env_array);
-		exit(127);
-	}
-	exit(EXIT_SUCCESS);
 }
 
 //***************create_child_for_multiples_cmds*******************************
@@ -97,6 +90,7 @@ void	create_childs(t_simple_cmd *cmd, t_env **env, t_pipe_files *var)
 			exit(EXIT_SUCCESS);
 		else
 			execute_cmd(cmd, env_arr);
+		// exit(1);
 	}
 }
 
@@ -104,12 +98,15 @@ int	run_built_ins(t_env **env, t_simple_cmd *cmd)
 {
 	if (is_built_ins(env, cmd) == 0)
 	{
-		g_exit_status = 0;
+		if (ft_strcmp(cmd->cmd, "exit") == 0)
+			g_exit_status = 1;
+		else
+			g_exit_status = 0;
 		return (0);
 	}
 	else
 	{
 		g_exit_status = 1;
-		return (g_exit_status);
+		return (1);
 	}
 }

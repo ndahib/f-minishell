@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 08:04:04 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/24 11:24:51 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/25 15:25:31 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	echo_with_par(char *args)
 	return (1);
 }
 
-void	my_echo(char **ptr)
+int	my_echo(char **ptr)
 {
 	int	i;
 	int	on;
@@ -44,7 +44,7 @@ void	my_echo(char **ptr)
 	if (*ptr == NULL)
 	{
 		printf("\n");
-		return ;
+		return (0);
 	}
 	while (echo_with_par(ptr[i]))
 	{
@@ -60,42 +60,49 @@ void	my_echo(char **ptr)
 	}
 	if (on == 0)
 		printf("\n");
+	return (0);
 }
 
+/// freee before exit 
 void	my_exit(char **arg)
 {
 	int	i;
 	int	nbr;
 
-	i = 0;
-	while (arg[i] != NULL)
+	i = 1;
+	while (arg[i])
 		i++;
-	if (i > 2)
-		return ;
+	if (i < 2)
+		exit(g_exit_status);
 	if (check_is_nbr(arg[1]) == 1)
 	{
 		printf(OUT_OF_RANGE, arg[1]);
-		exit(255);
+		g_exit_status = 255;
+		exit(g_exit_status);
+	}
+	else if (i > 2)
+	{
+		g_exit_status = 1;
+		printf("minishell: exit: too many arguments\n");
 		return ;
 	}
-	if (arg[1] == NULL)
-		exit(0);
 	nbr = ft_atoi(arg[1]);
 	if (nbr < 0 || nbr > 255)
 		exit(nbr % 256);
 	exit(nbr);
 }
 
-void	my_pwd(void)
+int	my_pwd(void)
 {
 	char	*path;
 
 	path = getcwd(NULL, 0);
 	if (path == NULL)
-		return ;
+		return (1);
 	ft_putstr_fd(path, 1);
 	ft_putchar_fd('\n', 1);
 	free(path);
+	return (0);
 }
 
 int	my_cd(t_simple_cmd *cmnd, t_env **env)
@@ -118,4 +125,3 @@ int	my_cd(t_simple_cmd *cmnd, t_env **env)
 	else
 		return (perror("minishell :"), 1);
 }
-/////return value

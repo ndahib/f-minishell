@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yraiss <yraiss@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 20:30:56 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/23 18:40:09 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/24 20:35:37 by yraiss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_env	*create_node(char *env)
 	t_env	*node;
 
 	node = malloc(sizeof(t_env));
-	node->env = env;
+	node->env = ft_strdup(env);
 	node->next = NULL;
 	return (node);
 }

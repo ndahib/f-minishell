@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:28:31 by yraiss            #+#    #+#             */
-/*   Updated: 2023/07/24 17:18:23 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/25 11:14:31 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,11 @@ char	*herdoc_line(char *new_del)
 
 char	*get_buffer(char *del, t_env *env)
 {
-	char	*line;
 	char	*final;
 	char	*new_del;
 	int		check;
 
 	final = "";
-	line = NULL;
 	new_del = NULL;
 	check = check_del(del);
 	if (check == 1)
@@ -80,6 +78,8 @@ int	her_doc(char *del, t_env *env)
 		return (perror("fork in herdoc : \n"), -1);
 	else if (!pid)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
 		close(fd[0]);
 		buff = get_buffer(del, env);
 		ft_putstr_fd(buff, fd[1]);
