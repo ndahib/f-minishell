@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expantion_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yraiss <yraiss@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 19:18:30 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/25 00:55:10 by yraiss           ###   ########.fr       */
+/*   Updated: 2023/07/25 22:32:36 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ void	expande_inside_quotes(char **new_arg, char **arg, t_env *env)
 		*arg += len_of_var(*arg + 1) + 1;
 	if (ft_strlen(value) != 0)
 		free (value);
-	free(cursor);
+	else
+		free(cursor);
 }

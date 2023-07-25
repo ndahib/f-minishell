@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 12:10:46 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/25 20:05:17 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/25 22:21:24 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	print_export_lst(t_env *lst)
 			if (arr[1] == NULL)
 				printf("declare -x %s\n", arr[0]);
 			else
-				printf("declare -x %s =\"%s\"\n", arr[0], arr[1]);
+				printf("declare -x %s=\"%s\"\n", arr[0], arr[1]);
 		}
 		tmp = tmp->next;
 		free_double_pointer(arr);
