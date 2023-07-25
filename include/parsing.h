@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 20:29:54 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/23 21:41:08 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/25 22:11:07 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,11 @@ int				len_of_var(char *var);
 void			print_lst(t_files *lst);
 char			**expander(t_env *env, char **arg);
 char			*my_getenv(t_env *lst, char *varibale);
-void			add_at_end_export(t_env ***head, t_env *node);
+void			join_cursor(char **new_arg, char *cursor);
 char			*obtain_path(char *command, t_env *env_list);
 int				check_if_exist(t_env **lst, char **variable);
-void			join_cursor(char **new_arg, char *cursor);
+void			add_at_end_export(t_env ***head, t_env *node);
+void			expand_exit_status(char **new_arg, char **arg);
 void			join_and_increment(char **new_arg, char **arg);
 void			expande_inside_quotes(char **new_arg, char **arg, t_env *env);
 //***********************************HER_DOC EXPAND****************************

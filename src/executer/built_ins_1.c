@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 12:10:46 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/25 12:26:30 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/25 20:05:17 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,17 @@ void	print_export_lst(t_env *lst)
 	tmp = lst;
 	while (tmp != NULL)
 	{
-		arr = ft_split(tmp->env,'=');
+		arr = ft_split(tmp->env, '=');
 		if (ft_strncmp(tmp->env, EXPORT_VAR, 50) != 0)
-			printf("declare -x %s =\"%s\"\n", arr[0], arr[1]);
+		{
+			if (arr[1] == NULL)
+				printf("declare -x %s\n", arr[0]);
+			else
+				printf("declare -x %s =\"%s\"\n", arr[0], arr[1]);
+		}
 		tmp = tmp->next;
+		free_double_pointer(arr);
 	}
-	//free arr
 }
 
 int	my_export(t_env ***lst, char **args)
@@ -82,6 +87,7 @@ void	unset_variable(t_env ***lst, char *arg)
 		{
 			freed = head->next;
 			head->next = head->next->next;
+			free(freed->env);
 			free(freed);
 		}
 		head = head->next;

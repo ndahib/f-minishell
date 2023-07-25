@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yraiss <yraiss@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 16:10:39 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/25 01:08:07 by yraiss           ###   ########.fr       */
+/*   Updated: 2023/07/25 22:08:12 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ t_env	*create_node(char *env);
 int		main(int ac, char **av, char **env);
 
 ///////////////////////FREE_UTILS//////////////////////////////////////////////
+void	free_lst_env(t_env **lst);
 void	free_double_pointer(char **pointer);
-void	free_lst_of_cmd(t_simple_cmd **cmds, int trigger);
+void	free_lst_of_cmd(t_simple_cmd **cmds);
 
 #endif

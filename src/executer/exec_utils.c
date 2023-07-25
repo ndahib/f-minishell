@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yraiss <yraiss@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:40:56 by yraiss            #+#    #+#             */
-/*   Updated: 2023/07/25 01:53:15 by yraiss           ###   ########.fr       */
+/*   Updated: 2023/07/25 19:59:46 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	count_env(t_env *envr)
 int	check_is_nbr(char *arg)
 {
 	int	i;
-	
+
 	i = 0;
 	if (arg == NULL)
 		return (1);
@@ -61,16 +61,23 @@ void	my_free1(char *p, char **args)
 
 void	old_pwd(t_env **env)
 {
-	char	oldpwd[4096];
+	char	*oldpwd;
 	t_env	*head;
+	char	*tmp;
 
 	head = *env;
-	getcwd(oldpwd, 4096);
+	oldpwd = getcwd(NULL, 0);
+	if (oldpwd == NULL)
+		return ;
 	while (head)
 	{
 		if (ft_strncmp("OLDPWD", head->env, 6) == 0)
 		{
-			head->env = ft_strjoin(ft_strdup("OLDPWD="), ft_strdup(oldpwd));
+			free(head->env);
+			head->env = NULL;
+			tmp = ft_strdup("OLDPWD=");
+			head->env = ft_strjoin(tmp, oldpwd);
+			free(oldpwd);
 			break ;
 		}
 		head = head->next;
@@ -79,16 +86,21 @@ void	old_pwd(t_env **env)
 
 void	new_pwd(t_env **env)
 {
-	char	newpwd[4096];
+	char	*newpwd;
 	t_env	*head;
+	char	*tmp;
 
 	head = *env;
-	getcwd(newpwd, 4096);
+	newpwd = getcwd(NULL, 0);
 	while (head)
 	{
 		if (ft_strncmp("PWD", head->env, 3) == 0)
 		{
-			head->env = ft_strjoin(ft_strdup("PWD="), ft_strdup(newpwd));
+			free(head->env);
+			head->env = NULL;
+			tmp = ft_strdup("PWD=");
+			head->env = ft_strjoin(tmp, newpwd);
+			free(newpwd);
 			break ;
 		}
 		head = head->next;

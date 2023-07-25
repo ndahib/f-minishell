@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 19:37:37 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/25 14:49:43 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/25 20:09:16 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,11 @@ int	builtins_exec(t_env ***lst, t_simple_cmd *cmd)
 	{
 		if (my_export(lst, cmd->arg + 1) == 1)
 			return (1);
-		else 
+		else
 			return (0);
 	}
 	else if (ft_strncmp(cmd->cmd, "exit", 5) == 0)
-		my_exit(cmd->arg);
+		my_exit(cmd->arg, cmd, *lst);
 	else
 		return (1);
 	return (0);
@@ -112,5 +112,4 @@ int	is_built_ins(t_env **lst, t_simple_cmd *cmd)
 	}
 	dup_and_close(std_fd);
 	return (0);
-	
 }

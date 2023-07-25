@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 08:04:04 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/25 15:25:31 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/25 21:07:00 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,33 +63,29 @@ int	my_echo(char **ptr)
 	return (0);
 }
 
-/// freee before exit 
-void	my_exit(char **arg)
+void	my_exit(char **arg, t_simple_cmd *cmd, t_env **lst)
 {
-	int	i;
-	int	nbr;
+	int	count;
 
-	i = 1;
-	while (arg[i])
-		i++;
-	if (i < 2)
-		exit(g_exit_status);
-	if (check_is_nbr(arg[1]) == 1)
+	count = 0;
+	while (arg && arg[count])
+		count++;
+	if (arg[1] && check_is_nbr(arg[1]) == 1)
 	{
 		printf(OUT_OF_RANGE, arg[1]);
 		g_exit_status = 255;
-		exit(g_exit_status);
 	}
-	else if (i > 2)
+	else if (count > 2)
 	{
 		g_exit_status = 1;
 		printf("minishell: exit: too many arguments\n");
 		return ;
 	}
-	nbr = ft_atoi(arg[1]);
-	if (nbr < 0 || nbr > 255)
-		exit(nbr % 256);
-	exit(nbr);
+	else
+		g_exit_status = ft_atoi(arg[1]);
+	free_lst_of_cmd(&cmd);
+	free_lst_env(lst);
+	exit(g_exit_status);
 }
 
 int	my_pwd(void)
@@ -116,9 +112,15 @@ int	my_cd(t_simple_cmd *cmnd, t_env **env)
 		if (home == NULL)
 			return (ft_putstr_fd("minishell: cd: HOME not set\n", 2), 1);
 		if (!chdir(home))
+		{
+			free(home);
 			return (new_pwd(env), 0);
+		}
 		else
+		{
+			free(home);
 			return (perror("minishell :"), 1);
+		}
 	}
 	if (!chdir(cmnd->arg[1]))
 		return (new_pwd(env), 0);

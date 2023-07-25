@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yraiss <yraiss@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:08:56 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/25 00:48:18 by yraiss           ###   ########.fr       */
+/*   Updated: 2023/07/25 22:10:08 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,7 @@ void	obtain_value(t_env *env, char **new_arg, char **arg)
 		*arg += len_of_var(*arg + 1) + 1;
 	}
 	else if (*(*arg + 1) == '?')
-	{
-		char	*exit;
-		exit = ft_itoa(g_exit_status);
-		*new_arg = ft_strjoin(*new_arg, exit);
-		free(exit);
-		(*arg) += 2;
-	}
+		expand_exit_status(new_arg, arg);
 	else if (*arg + 1 != NULL)
 		join_and_increment(new_arg, arg);
 }

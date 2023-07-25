@@ -6,13 +6,13 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:42:32 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/25 15:28:17 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/25 20:36:29 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    handle_sig(int sig)
+void	handle_sig(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -24,21 +24,30 @@ void    handle_sig(int sig)
 	}
 }
 
-void	free_all(t_simple_cmd **lst, char **tokens, char *line, int trigger)
+void	parse_and_execute(t_env **env_lst, char **tokens, char *cmd_line)
 {
-	free_lst_of_cmd(lst, trigger);
+	t_simple_cmd	*parse_cmd;
+
+	parse_cmd = NULL;
+	parse_cmd = parse_simple_cmd(*env_lst, tokens);
 	free_double_pointer(tokens);
-	free(line);
+	free(cmd_line);
+	execute_commands(parse_cmd, env_lst);
+	free_lst_of_cmd(&parse_cmd);
+}
+
+void	free_all(char **tokens, char *cmd_line)
+{	
+	g_exit_status = 2;
+	free_double_pointer(tokens);
+	free(cmd_line);
 }
 
 void	minishell_loop(t_env **env_lst)
 {
-	char			**tokens;
-	char			*cmd_line;
-	t_simple_cmd	*parse_cmd;
+	char	**tokens;
+	char	*cmd_line;
 
-	(void)env_lst;
-	parse_cmd = NULL;
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, handle_sig);
 	while (1)
@@ -56,14 +65,10 @@ void	minishell_loop(t_env **env_lst)
 		tokens = tokeniser(cmd_line);
 		if (check_syntax_err(tokens) == 1)
 		{
-			free_double_pointer(tokens);
-			free(cmd_line);
-			g_exit_status = 2;
+			free_all(tokens, cmd_line);
 			continue ;
 		}
-		parse_cmd = parse_simple_cmd(*env_lst, tokens);
-		int trigger = execute_commands(parse_cmd, env_lst);
-		free_all(&parse_cmd, tokens, cmd_line, trigger);
+		parse_and_execute(env_lst, tokens, cmd_line);
 	}
 }
 
