@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:28:31 by yraiss            #+#    #+#             */
-/*   Updated: 2023/07/30 17:25:47 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/30 20:11:40 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,13 @@ int	her_doc(char *del, t_env *env)
 	buff = "";
 	if (pipe(fd) == -1)
 		return (perror("minishell : "), -1);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, SIG_DFL);
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid == -1)
 		return (perror("fork in heredoc : \n"), -1);
 	else if (!pid)
 	{
+		signal(SIGINT, handle_herdoc);
 		close(fd[0]);
 		buff = get_buffer(del, env);
 		ft_putstr_fd(buff, fd[1]);
@@ -89,7 +89,13 @@ int	her_doc(char *del, t_env *env)
 		exit(EXIT_SUCCESS);
 	}
 	close(fd[1]);
-	wait(NULL);
+	wait_childs(1);
+	printf("%d\n", g_exit_status);
+	if (g_exit_status == 1)
+	{
+		mini_error = 1;
+		return (close(fd[0]), -1);
+	}
 	return (fd[0]);
 }
 

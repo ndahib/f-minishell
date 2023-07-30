@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:06:13 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/29 19:21:44 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/30 20:13:55 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int	execute_commands(t_simple_cmd *cmnd, t_env **env)
 	int		nbr;
 	int		status;
 
+	if (mini_error == 1)
+		return (1);
 	nbr = get_number_of_cmds(cmnd);
 	if (nbr == 1)
 		status = execute_one_simple_cmd(cmnd, env);

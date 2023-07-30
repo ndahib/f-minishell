@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 07:59:58 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/30 14:31:48 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/30 20:12:55 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ t_simple_cmd	*parse_simple_cmd(t_env *env_lst, char **token)
 	node_cmd = NULL;
 	while (*token != NULL)
 	{
+		if (mini_error == 1)
+			break ;
 		if (strchr(*token, '|') == NULL)
 		{
 			node_cmd = create_node_cmd(env_lst, &token);

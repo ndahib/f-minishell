@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:42:32 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/30 18:00:57 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/30 20:20:21 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ void	handle_sig(int sig)
 		// rl_replace_line("", 0);
 		rl_redisplay();
 	}
+}
+
+void	handle_herdoc(int sig)
+{
+	(void)sig;
+	exit(EXIT_FAILURE);
 }
 
 void	parse_and_execute(t_env **env_lst, char **tokens, char *cmd_line)
@@ -49,9 +55,9 @@ void	minishell_loop(t_env **env_lst)
 	char	**tokens;
 	char	*cmd_line;
 
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, handle_sig);
 		cmd_line = readline("minishell-> ");
 		if (!cmd_line)
@@ -70,6 +76,7 @@ void	minishell_loop(t_env **env_lst)
 			continue ;
 		}
 		parse_and_execute(env_lst, tokens, cmd_line);
+		mini_error = 0;
 		system("leaks minishell");
 	}
 }

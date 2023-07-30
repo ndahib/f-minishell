@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 20:29:54 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/30 14:26:02 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/30 20:00:45 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,5 @@ int				her_doc(char *del, t_env *env);
 char			*expand_her_doc(char *buff, t_env *env);
 void			obtain_value(t_env *env, char **new_arg, char **arg);
 void			print_lst(t_files *lst);
+void			handle_herdoc(int sig);
 #endif

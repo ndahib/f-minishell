@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 10:52:52 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/29 18:59:57 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/30 19:50:11 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	wait_childs(int nbr)
 		wait(&status);
 		if (WIFSIGNALED(status))
 			g_exit_status = WTERMSIG(status) + 128;
-		if (WIFEXITED(status))
+		else if (WIFEXITED(status))
 			g_exit_status = WEXITSTATUS(status);
 		i++;
 	}
