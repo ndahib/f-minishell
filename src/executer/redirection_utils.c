@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yraiss <yraiss@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:20:00 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/24 17:25:56 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/25 23:39:00 by yraiss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	append_redirection(char *file)
 
 	fd = open(file, O_RDWR | O_CREAT | O_APPEND, 0777);
 	if (fd == -1)
-		return (perror("minishell"), 1);
+		return (perror("minishell "), 1);
 	dup2(fd, 1);
 	close (fd);
 	return (0);

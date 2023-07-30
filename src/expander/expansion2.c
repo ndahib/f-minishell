@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:08:56 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/25 22:10:08 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/29 21:45:35 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	obtain_value(t_env *env, char **new_arg, char **arg)
 		*arg += len_of_var(*arg + 1) + 1;
 	}
 	else if (*(*arg + 1) == '?')
-		expand_exit_status(new_arg, arg);
+		expand_exit_status(new_arg, arg, 1);
 	else if (*arg + 1 != NULL)
 		join_and_increment(new_arg, arg);
 }
@@ -62,7 +62,7 @@ char	*single_quotes(char **line)
 	{
 		if ((*line)[i] == '\'')
 			break ;
-		i++ ;
+		i++;
 	}
 	len = i + 1;
 	quotes = malloc(len);
@@ -122,6 +122,8 @@ char	**expander(t_env *env, char **arg)
 	}
 	new_line = expand_line(env, one_line);
 	free(one_line);
+	if (new_line == NULL)
+		return (free(new_line), NULL);
 	splited = ft_split(new_line, '\2');
 	free(new_line);
 	free_double_pointer(tmp_for_arg);

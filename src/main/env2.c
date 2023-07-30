@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yraiss <yraiss@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 12:31:00 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/24 20:19:33 by yraiss           ###   ########.fr       */
+/*   Updated: 2023/07/29 15:00:47 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	check_if_exist(t_env **lst, char **variable)
 	tmp = *lst;
 	if (*lst == NULL || lst == NULL)
 	{
-		printf(RED LIST_NULL);
+		ft_putstr_fd(LIST_NULL, 2);
 		return (-1);
 	}
 	while (tmp != NULL)
@@ -84,9 +84,9 @@ int	check_if_exist(t_env **lst, char **variable)
 		if (ft_strncmp(tmp->env, variable[0], len1) == 0
 			&& ft_strncmp(tmp->env, variable[0], len2) == 0)
 		{
+			free(tmp->env);
 			variable[0] = ft_joinchar(variable[0], '=');
-			tmp->env = ft_strjoin(variable[0], variable[1]);
-			free(variable);
+			tmp->env = ft_strjoin(ft_strdup(variable[0]), variable[1]);
 			return (1);
 		}
 		tmp = tmp->next;

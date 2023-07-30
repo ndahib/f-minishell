@@ -6,13 +6,13 @@
 #    By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/19 15:58:03 by ndahib            #+#    #+#              #
-#    Updated: 2023/07/25 22:33:17 by ndahib           ###   ########.fr        #
+#    Updated: 2023/07/29 21:07:59 by ndahib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #COMMANDS#
 CC		= cc 
-FLAGS	= -I/Users/yraiss/homebrew/opt/readline/include #-g -fsanitize=address #-Wall -Wextra -Werror
+FLAGS	= -Wall -Wextra -Werror -I/Users/yraiss/homebrew/opt/readline/include
 RM		= rm -rf
 # READLINE	= $(shell brew  --prefix readline)
 
@@ -33,7 +33,7 @@ $(LIBFT):
 	make -C $(LIBFTDIR)
 
 $(NAME) : $(OBJS)
-	$(CC) $(FLAGS) -L/Users/yraiss/homebrew/opt/readline/lib $(LIBFTDIR)$(LIBFT) $(INCLUDE) -lreadline $(OBJS) -o $@
+	$(CC) $(FLAGS) -lreadline $(LIBFTDIR)$(LIBFT) $(INCLUDE) $(OBJS) -o $@
 
 $(BUILD_DIR)/%.o : $(SRC_DIR)/%.c
 	mkdir -p $(BUILD_DIR)

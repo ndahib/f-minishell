@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:42:32 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/25 20:36:29 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/30 14:31:22 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void	handle_sig(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_exit_status = 130;
+		g_exit_status = 1;
 		write(1, "\n", 1);
 		rl_on_new_line();
-		// rl_replace_line("",0);
+		// rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }
@@ -52,7 +52,7 @@ void	minishell_loop(t_env **env_lst)
 	signal(SIGINT, handle_sig);
 	while (1)
 	{
-		cmd_line = readline("minishell-> "CYAN);
+		cmd_line = readline("minishell-> ");
 		if (!cmd_line)
 			exit(g_exit_status);
 		if (!ft_strlen(cmd_line))
@@ -69,6 +69,7 @@ void	minishell_loop(t_env **env_lst)
 			continue ;
 		}
 		parse_and_execute(env_lst, tokens, cmd_line);
+		system("leaks minishell");
 	}
 }
 
@@ -82,13 +83,3 @@ int	main(int ac, char **av, char **env)
 	minishell_loop(&env_lst);
 	return (0);
 }
-
-		// while (parse_cmd)
-		// {
-		// 	printf("%d\n", parse_cmd->fd);
-		// 	printf("%s\n", parse_cmd->cmd);
-		// 	printf("%s\n", parse_cmd->path);
-		// 	printf_double_pointer(parse_cmd->arg);
-		// 	print_lst(parse_cmd->files);
-		// 	parse_cmd = parse_cmd->next;
-		// }

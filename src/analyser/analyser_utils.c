@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyser_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yraiss <yraiss@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 15:11:01 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/24 00:37:33 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/25 23:54:38 by yraiss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	check(char *token, char quote)
 	{
 		if (token[i + 1] == '\0' && token[i] == quote)
 		{
-			printf(RED PARSE_ERR"`'`\n");
+			ft_putstr_fd(PARSE_ERR"`'`\n", 2);
 			return (1);
 		}
 		i++;
@@ -82,7 +82,7 @@ int	check_syntax_error(char **tokens, char quot)
 	i = check(*tokens + i, quot);
 	if ((nbr_of_quotes(*tokens, quot) % 2 != 0))
 	{
-		printf(RED "syntax error\n");
+		ft_putstr_fd("syntax error\n", 2);
 		return (1);
 	}
 	return (0);

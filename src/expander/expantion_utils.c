@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 19:18:30 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/25 22:32:36 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/27 13:14:42 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,17 @@ void	join_and_increment(char **new_arg, char **arg)
 	}
 }
 
-void	expand_exit_status(char **new_arg, char **arg)
+void	expand_exit_status(char **new_arg, char **arg, int flag)
 {
 	char	*exit;
 
 	exit = ft_itoa(g_exit_status);
 	*new_arg = ft_strjoin(*new_arg, exit);
 	free(exit);
-	(*arg) += 2;
+	if (flag == 1)
+		(*arg) += 2;
+	else if (flag == 0)
+		(*arg) += 1;
 }
 
 void	expande_inside_quotes(char **new_arg, char **arg, t_env *env)
@@ -60,7 +63,7 @@ void	expande_inside_quotes(char **new_arg, char **arg, t_env *env)
 		free(cursor);
 	}
 	else if (*(*arg + 1) == '?')
-		expand_exit_status(new_arg, arg);
+		expand_exit_status(new_arg, arg, 0);
 	else
 		*new_arg = ft_joinchar(*new_arg, **arg);
 	if (*arg != 0)

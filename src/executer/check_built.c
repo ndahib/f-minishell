@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 19:37:37 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/25 20:09:16 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/29 19:26:24 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	check_is_built_ins(char *cmd)
 {
+	if (cmd == NULL)
+		return (1);
 	if (ft_strncmp(cmd, "echo", 5) == 0)
 		return (0);
 	else if (ft_strncmp(cmd, "cd", 3) == 0)

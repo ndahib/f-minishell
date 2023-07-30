@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:15:45 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/25 20:37:18 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/29 19:27:22 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ void	execute_cmd(t_simple_cmd *cmd, char **env_array)
 	on = 0;
 	if (cmd->path == NULL)
 	{
-		printf("minishell : command not found\n");
+		ft_putstr_fd("minishell : command not found\n", 2);
 		free_lst_of_cmd(&cmd);
 		free_double_pointer(env_array);
 		exit(127);
 	}
 	if (execve(cmd->path, cmd->arg, env_array) == -1)
 	{
-		perror("minishell:\n");
+		perror("minishell");
 		free_lst_of_cmd(&cmd);
 		free_double_pointer(env_array);
 		exit(127);
@@ -57,6 +57,8 @@ void	create_child(t_simple_cmd *one_cmd, char **env)
 			dup_close(one_cmd->fd);
 		if (check_redir(one_cmd->files) == 1)
 			exit(EXIT_FAILURE);
+		if (one_cmd->cmd == NULL)
+			exit(EXIT_SUCCESS);
 		execute_cmd(one_cmd, env);
 		exit(EXIT_SUCCESS);
 	}

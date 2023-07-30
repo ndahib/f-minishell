@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yraiss <yraiss@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 08:04:04 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/25 21:07:00 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/26 16:20:15 by yraiss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ void	my_exit(char **arg, t_simple_cmd *cmd, t_env **lst)
 	else if (count > 2)
 	{
 		g_exit_status = 1;
-		printf("minishell: exit: too many arguments\n");
+		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		return ;
 	}
-	else
+	else if (arg[1] != NULL)
 		g_exit_status = ft_atoi(arg[1]);
 	free_lst_of_cmd(&cmd);
 	free_lst_env(lst);

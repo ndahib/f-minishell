@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 21:58:30 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/13 21:24:49 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/29 21:46:27 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	size_t	totalen;
 
 	i = 0;
-	if (s2 == 0)
+	if (s2 == 0 || *s2 == 0)
 		return ((char *)s1);
 	totalen = ft_strlen(s1) + ft_strlen(s2) + 1;
 	joined = (char *)ft_calloc(totalen, sizeof(char));

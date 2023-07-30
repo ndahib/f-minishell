@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 12:50:38 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/23 21:44:12 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/30 14:32:49 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,12 @@ char	*obtain_path(char *command, t_env *env_list)
 	}
 	free_double_pointer(split_paths);
 	return (NULL);
+}
+
+char	*name_of_file(char *token)
+{
+	if (ft_strchr(token, '\'') || ft_strchr(token, '"'))
+		return (NULL);
+	else
+		return (ft_strdup(token));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyser.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yraiss <yraiss@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 09:03:39 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/25 15:51:22 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/25 23:54:48 by yraiss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ int	check_pipe(char **tokens, char *fix)
 		|| (*(tokens + 1) && ft_strncmp(*tokens, *(tokens + 1), 1) == 0)
 		|| *(tokens + 1) == NULL)
 	{
-		printf(RED PARSE_ERR"`%s'\n", *tokens);
+		ft_putstr_fd(PARSE_ERR, 2);
+		ft_putstr_fd(*tokens, 2);
+		ft_putchar_fd('\n', 2);
 		return (1);
 	}
 	return (0);
@@ -28,14 +30,14 @@ int	check_redirection(char **tokens)
 {
 	if (*(tokens + 1) == NULL)
 	{
-		printf(RED "minishell: syntax error\n");
+		ft_putstr_fd("minishell: syntax error\n", 2);
 		return (1);
 	}
 	else if (*(tokens + 1) != NULL)
 	{
 		if (check_file_name(*tokens, *(tokens + 1)) == 1)
 		{
-			printf(RED "minishell: syntax error\n");
+			ft_putstr_fd("minishell: syntax error\n", 2);
 			return (1);
 		}
 	}

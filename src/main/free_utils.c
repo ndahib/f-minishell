@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 08:07:55 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/25 20:18:54 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/30 14:32:36 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	free_double_pointer(char **pointer)
 void	free_files(t_files **files)
 {
 	t_files	*tmp;
+	t_files	*tmp2;
 
 	tmp = *files;
 	if (files == NULL || *files == NULL)
@@ -38,9 +39,10 @@ void	free_files(t_files **files)
 	while (tmp != NULL)
 	{
 		free(tmp->file);
+		tmp2 = tmp;
 		tmp = tmp->next;
+		free(tmp2);
 	}
-	free(*files);
 }
 
 void	free_lst_of_cmd(t_simple_cmd **head)
@@ -69,4 +71,12 @@ void	free_lst_env(t_env **lst)
 		free((*lst)->env);
 		(*lst) = (*lst)->next;
 	}
+}
+
+void	free_node(t_env *head)
+{
+	if (head == NULL)
+		return ;
+	free(head->env);
+	free(head);
 }

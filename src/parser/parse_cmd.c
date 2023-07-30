@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yraiss <yraiss@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 07:59:58 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/25 00:31:27 by yraiss           ###   ########.fr       */
+/*   Updated: 2023/07/30 14:31:48 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,16 @@ char	*obtain_cmd(char **token)
 	cmd = NULL;
 	if (token == NULL || *token == NULL)
 		return (NULL);
-	while ((**token == '>' || **token == '<'))
+	if ((**token == '>' || **token == '<')
+		&& *(token + 1) == NULL)
+		return (NULL);
+	while ((**token == '>' || **token == '<')
+		&& *(token + 1) != NULL)
 	{
 		if (*(token + 2) != NULL)
 			token += 2;
+		else
+			return (NULL);
 	}
 	if (*token != NULL)
 		cmd = ft_strdup(*token);
@@ -79,7 +85,7 @@ t_simple_cmd	*create_node_cmd(t_env *env_var, char ***token)
 	node = malloc(1 * sizeof(t_simple_cmd));
 	if (!node)
 	{
-		printf(RED ALLOC_ERR);
+		ft_putstr_fd(ALLOC_ERR, 2);
 		return (NULL);
 	}
 	node->fd = -1;

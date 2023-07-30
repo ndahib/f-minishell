@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:43:17 by ndahib            #+#    #+#             */
-/*   Updated: 2023/06/17 18:27:22 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/29 21:27:19 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ char	**ft_split(char const *s, char c)
 	int		i;
 
 	i = 0;
+	if (s == NULL)
+		return (NULL);
 	str = ft_calloc((nbrwords((char *)s, c) + 1), sizeof(char *));
 	if (!str)
 		return (0);
