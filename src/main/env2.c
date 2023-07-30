@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 12:31:00 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/29 15:00:47 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/30 17:38:08 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 int	check_variable(char *token)
 {
 	if (ft_isalpha(*token) == 0 && *token != '_')
+		return (1);
+	if (*token == '=')
 		return (1);
 	token++;
 	while (*token != '=' && *token != '\0')

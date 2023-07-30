@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:15:45 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/29 19:27:22 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/30 16:58:03 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	create_child(t_simple_cmd *one_cmd, char **env)
 	pid = fork();
 	if (pid == -1)
 		perror("fork :");
+	signal(SIGQUIT, SIG_IGN);
 	if (pid == 0)
 	{
 		if (one_cmd->fd != -1)

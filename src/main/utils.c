@@ -6,22 +6,22 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 11:40:38 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/25 20:21:47 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/30 17:35:02 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	printf_double_pointer(char **arr)
-// {
-// 	if (arr == NULL)
-// 		return ;
-// 	while (*arr != NULL)
-// 	{
-// 		printf(RED"THE argument :%s\n", *arr);
-// 		arr++;
-// 	}
-// }
+void	printf_double_pointer(char **arr)
+{
+	if (arr == NULL)
+		return ;
+	while (*arr != NULL)
+	{
+		printf("THE argument :%s\n", *arr);
+		arr++;
+	}
+}
 int	len_of_var(char *var)
 {
 	int	count;

@@ -6,13 +6,13 @@
 #    By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/19 15:58:03 by ndahib            #+#    #+#              #
-#    Updated: 2023/07/29 21:07:59 by ndahib           ###   ########.fr        #
+#    Updated: 2023/07/30 17:42:58 by ndahib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #COMMANDS#
 CC		= cc 
-FLAGS	= -Wall -Wextra -Werror -I/Users/yraiss/homebrew/opt/readline/include
+FLAGS	= -Wall -Wextra -Werror -I/Users/yraiss/homebrew/opt/readline/include #-g -fsanitize=address
 RM		= rm -rf
 # READLINE	= $(shell brew  --prefix readline)
 

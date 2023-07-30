@@ -6,7 +6,7 @@
 /*   By: ndahib <ndahib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 12:10:46 by ndahib            #+#    #+#             */
-/*   Updated: 2023/07/30 14:33:09 by ndahib           ###   ########.fr       */
+/*   Updated: 2023/07/30 17:40:10 by ndahib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	my_export(t_env ***lst, char **args)
 	while (args[i] != NULL)
 	{
 		splited_args = ft_split(args[i], '=');
-		if (check_if_quotes_exist(args) != 0)
+		if (check_if_quotes_exist(&args[i]) != 0)
 		{
 			ft_putstr_fd("minshell: not a valid identifier\n", 2);
 			free_double_pointer(splited_args);
